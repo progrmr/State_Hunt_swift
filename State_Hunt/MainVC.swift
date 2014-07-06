@@ -31,7 +31,8 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
     var headerView  : HeaderView?
     
     // map layers
-    var tiledLayer  : AGSTiledMapServiceLayer?
+    var tiledLayer    : AGSTiledMapServiceLayer?
+    var graphicsLayer = AGSGraphicsLayer()
     
     let dateFormatter = NSDateFormatter()
     var showDetails   = false
@@ -44,8 +45,11 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
     var oohSound      : SoundFX?
     
     // statesGeometry keyed by StateCode
-    var stateGeometry : Dictionary<ScoreBoard.StateCode,AGSGeometry> = Dictionary()
-    var stateQueries  : Dictionary<ScoreBoard.StateCode,NSOperation> = Dictionary()
+    var stateQueryTask  : AGSQueryTask?
+    var stateQueryCode  : ScoreBoard.StateCode?
+    var stateGraphics   : Dictionary<ScoreBoard.StateCode,AGSGraphic> = Dictionary()
+    
+    var statusBarHidden : Bool = true
     
     init(nibName nibNameOrNil: String!, bundle nibBundleOrNil: NSBundle!)
     {
@@ -82,6 +86,9 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         self.tiledLayer = tiledLayer
         tiledLayer.delegate = self
         mapView.addMapLayer(tiledLayer)
+        
+        // add the graphics layer to the map
+        mapView.addMapLayer(graphicsLayer)
         
         // add status bar backdrop
         let backdrop = UIView()
@@ -135,11 +142,14 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         }
     }
 
-    override func viewWillAppear(animated: Bool)
-    {
+    override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
         listView?.reloadData()
+    }
+    
+    override func prefersStatusBarHidden() -> Bool {
+        return self.statusBarHidden
     }
     
     func markNewStateSeen(stateIndex: ScoreBoard.StateIndex) {
@@ -378,14 +388,17 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
             // hasn't been seen before, set it to "seen"
             scores.markStateSeen(index)
             
+            // fetch geometry for the state (if necessary)
+            self.fetchStateGeometry(index)
+            
         } else {
             // Mark a "seen" state back to "unseen"
             scores.unmarkStateSeen(index)
+            
+            // unhighlight state
+            self.unhighlightStateGeometry(index)
         }
 
-        // fetch geometry for the state (if necessary)
-        self.fetchGeometryForState(index)
-        
         // update cell in table
         let indexPath = NSIndexPath(forRow:index, inSection: 0)
         listView!.reloadItemsAtIndexPaths([indexPath])
@@ -394,34 +407,69 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         headerView!.setScore(scores.numberOfStatesSeen())
     }
     
-    func fetchGeometryForState(index: ScoreBoard.StateIndex) {
+    func fetchStateGeometry(index: ScoreBoard.StateIndex) {
         let stateCode = scores.stateCodeForIndex(index)
-        
-        if stateGeometry[stateCode] == nil && stateQueries[stateCode] == nil {
-            let stateName = scores.stateNameForCode[stateCode]
+
+        if let graphic = stateGraphics[stateCode] {
+            // we already have the graphic, just highlight it
+            self.highlightStateGeometry(graphic)
+            
+        } else {
+            // geometry must be fetched from service
             let query = AGSQuery()
             query.returnGeometry        = true
             query.outSpatialReference   = mapView!.spatialReference
-            query.`where`               = "where STATE_NAME = California"  //"where STATE_NAME = '\(stateName)'"
-            query.outFields             = ["*"];
+            query.text                  = "\(scores.stateNameForCode[stateCode])"
+            query.outFields             = ["geometry", "STATE_NAME"];
             
-            let demoURL   = NSURL(string: kDemographicsURLString)
-            let queryTask = AGSQueryTask(URL: demoURL)
-            queryTask.delegate = self
-            
-            stateQueries[stateCode] = queryTask.executeWithQuery(query)
+            let demographicsURL = NSURL(string: kDemographicsURLString)
+            stateQueryCode = stateCode
+            stateQueryTask = AGSQueryTask(URL: demographicsURL)
+            stateQueryTask!.delegate = self
+            stateQueryTask!.executeWithQuery(query)
         }
+    }
+
+    func highlightStateGeometry(graphic: AGSGraphic) {
+        graphic.symbol  = AGSSimpleFillSymbol(color: UIColor(rgba:0x77ff7740), outlineColor: UIColor(rgb:0x005500))
+        self.zoomToGeometry(graphic.geometry)
+        graphicsLayer.addGraphic(graphic)
+    }
+    
+    func unhighlightStateGeometry(index: ScoreBoard.StateIndex) {
+        let stateCode = scores.stateCodeForIndex(index)
+
+        if let graphic = stateGraphics[stateCode] {
+            graphicsLayer.removeGraphic(graphic)
+            self.zoomToGeometry(graphic.geometry)
+        }
+    }
+    
+    func zoomToGeometry(geometry: AGSGeometry) {
+        mapView?.zoomToGeometry(geometry, withPadding: 80, animated: true)
     }
     
     //------------------------------------------
     // AGSQueryTaskDelegate methods
     //------------------------------------------
     func queryTask(queryTask: AGSQueryTask!, operation op: NSOperation!, didExecuteWithFeatureSetResult featureSet: AGSFeatureSet!) {
-        NSLog("queryTask done")
+        let stateGraphic: AGSGraphic = featureSet.features[0] as AGSGraphic
+        
+        if let code = stateQueryCode {
+            stateGraphics[code] = stateGraphic
+            
+            self.highlightStateGeometry(stateGraphic)
+        }
+        
+        stateQueryTask = nil
+        stateQueryCode = nil
     }
-    
+
     func queryTask(queryTask: AGSQueryTask!, operation op: NSOperation!, didFailWithError error: NSError!) {
-        NSLog("queryTask FAIL")
+        println("FAIL: \(error.description)")
+        
+        stateQueryTask = nil
+        stateQueryCode = nil
     }
     
 }

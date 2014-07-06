@@ -52,7 +52,7 @@ class SettingsVC : UIViewController {
         howToLabel.textAlignment    = .Center
         howToLabel.font             = UIFont.systemFontOfSize(15)
         howToLabel.numberOfLines    = 3
-        howToLabel.text             = "Try to spot license plats from every state and keep track of which ones you have seen."
+        howToLabel.text             = "Try to spot license plates from each state and keep track of which ones you have seen."
         
         // add the done button
         doneButton.backgroundColor  = theme.kBackgroundColor
