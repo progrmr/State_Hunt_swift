@@ -17,9 +17,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: NSDictionary?) -> Bool {
+        //--------------------------------
         // initialize ArcGIS client id
-//        let clientID = "replace this with your client id"
-//        AGSRuntimeEnvironment.setClientID(clientID, error: nil)
+        //--------------------------------
+        // For this public sample, we are using kClientID from
+        // https://github.com/Esri/arcgis-runtime-samples-ios/blob/master/LicenseByOrgAccountSample/LicenseHelperConstants.h
+        // replace this client id with your own clientID
+        let kClientID = "17VawA9qKb4w14Ch"
+        AGSRuntimeEnvironment.setClientID(kClientID, error: nil)
         
         // Override point for customization after application launch.
         let w = UIWindow()

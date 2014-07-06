@@ -126,7 +126,7 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         nslc += "H:|[backdrop]|"
         nslc += "V:|[backdrop]"
         nslc += "V:|[map(>=160)][list]|"
-        nslc += NSLC.EQ(mapView, attr1:.Height, multiplier:0.4, item2:view, attr2:.Height, priority: 900)
+        nslc += NSLC.EQ(mapView, attr1:.Height, multiplier:0.45, item2:view, attr2:.Height, priority: 900)
         nslc += NSLC.EQ(backdrop, attr1:.Bottom, item2:self.topLayoutGuide, attr2:.Bottom)
     }
     
@@ -139,6 +139,21 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         }
         if doorSound == nil {
             doorSound = SoundFX(filePath:"close_door2", ofType:"wav")
+        }
+        
+        // get geometries for all seen states and highlight them on the map
+        let defaults = NSUserDefaults.standardUserDefaults()
+
+        for (stateCode, dateSeen) in scores.dateSeenForCode {
+            if let date = scores.dateSeenForCode[stateCode] {
+                if let graphicJSON : AnyObject = defaults.objectForKey("stateCode_\(stateCode)") {
+                    // save the graphic for this state and highlight it on the map
+                    let stateGraphic = AGSGraphic(JSON: graphicJSON as NSDictionary)
+                    
+                    stateGraphics[stateCode] = stateGraphic
+                    self.highlightStateGeometry(stateGraphic, zoom: false)
+                }
+            }
         }
     }
 
@@ -261,10 +276,7 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         // TBD
         NSLog("layerDidLoad: %@", layer.name)
         
-        var center = AGSPoint(x:kInitialLatLong.long, y:kInitialLatLong.lat, spatialReference: AGSSpatialReference.wgs84SpatialReference())
-        let engine = AGSGeometryEngine.defaultGeometryEngine()
-        center = engine.projectGeometry(center, toSpatialReference: mapView!.spatialReference) as AGSPoint
-        mapView!.zoomToScale(kMapScaleInitial, withCenterPoint: center, animated: true)
+        self.zoomToUnitedStates()
     }
 
     //------------------------------------------
@@ -430,10 +442,13 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         }
     }
 
-    func highlightStateGeometry(graphic: AGSGraphic) {
+    func highlightStateGeometry(graphic: AGSGraphic, zoom: Bool = true) {
         graphic.symbol  = AGSSimpleFillSymbol(color: UIColor(rgba:0x77ff7740), outlineColor: UIColor(rgb:0x005500))
-        self.zoomToGeometry(graphic.geometry)
         graphicsLayer.addGraphic(graphic)
+        
+        if zoom {
+            self.zoomToGeometry(graphic.geometry)
+        }
     }
     
     func unhighlightStateGeometry(index: ScoreBoard.StateIndex) {
@@ -441,12 +456,20 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
 
         if let graphic = stateGraphics[stateCode] {
             graphicsLayer.removeGraphic(graphic)
-            self.zoomToGeometry(graphic.geometry)
         }
+        
+        self.zoomToUnitedStates()
     }
     
     func zoomToGeometry(geometry: AGSGeometry) {
         mapView?.zoomToGeometry(geometry, withPadding: 80, animated: true)
+    }
+    
+    func zoomToUnitedStates() {
+        var center = AGSPoint(x:kInitialLatLong.long, y:kInitialLatLong.lat, spatialReference: AGSSpatialReference.wgs84SpatialReference())
+        let engine = AGSGeometryEngine.defaultGeometryEngine()
+        center = engine.projectGeometry(center, toSpatialReference: mapView!.spatialReference) as AGSPoint
+        mapView!.zoomToScale(kMapScaleInitial, withCenterPoint: center, animated: true)
     }
     
     //------------------------------------------
@@ -459,6 +482,12 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
             stateGraphics[code] = stateGraphic
             
             self.highlightStateGeometry(stateGraphic)
+            
+            // save stateGraphic to NSUserDefaults
+            let defaults = NSUserDefaults.standardUserDefaults()
+            let graphicJSON = stateGraphic.encodeToJSON()
+            defaults.setObject(graphicJSON, forKey:"stateCode_\(code)")
+            defaults.synchronize()
         }
         
         stateQueryTask = nil
