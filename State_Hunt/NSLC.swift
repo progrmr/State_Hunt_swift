@@ -8,7 +8,6 @@
 
 import UIKit
 import Foundation
-import ArcGIS
 
 //-----------------------------------------------------------------------------
 // NSLC is a class that provides convenient methods for adding NSLayoutConstraints
@@ -41,49 +40,55 @@ import ArcGIS
 
 // adds a named view for use with visual layout
 @assignment func += (inout left: NSLC, right: (name:String, subview:UIView)) {
+    // make sure subview is setup for auto layout
+    right.subview.setTranslatesAutoresizingMaskIntoConstraints(false)
+
     // add subview and its name to the dictionary
     left.subviews[right.name] = right.subview
     
-    // make sure subview is a subview
+    // add the subview as a subview of parent (if needed)
     if right.subview.superview == nil {
-        left.parent.addSubview(right.subview)
-        
-// UNCOMMENT TO SEE VIEW BOUNDARIES
-//        right.subview.layer.borderColor = UIColor.greenColor().CGColor
-//        right.subview.layer.borderWidth = 1
+        left.parent?.addSubview(right.subview)
     }
     
-    // make sure subview is setup for auto layout
-    right.subview.setTranslatesAutoresizingMaskIntoConstraints(false)
+// UNCOMMENT TO SHOW ALL VIEW BOUNDARIES
+//        right.subview.layer.borderColor = UIColor.greenColor().CGColor
+//        right.subview.layer.borderWidth = 1
 }
 
 // adds a Dictionary of named subviews for use with visual layout
 @assignment func += (inout left: NSLC, right: Dictionary<String,UIView>) {
-    for (name: String, subview: UIView) in right {
-        left += (name:name, subview:subview)
+    for (name, subview) in right {
+        left += (name, subview)
     }
 }
 
-// adds constraints to parent view using the visual layout
+// adds constraints using the visual layout
 @assignment func += (inout left: NSLC, visualFormat: String) {
-    let constraints = left.visualConstraints(visualFormat)
-    left.parent.addConstraints(constraints)
+    left.addConstraints(visualFormat)
 }
 
-// add a constraint to parent view
+// add an array of constraints
+@assignment func += (inout left: NSLC, right: Array<NSLayoutConstraint> ) {
+    for constraint in right {
+        left.addConstraint(constraint)
+    }
+}
+
+// add a single constraint
 @assignment func += (inout left: NSLC, right: NSLayoutConstraint) {
-    left.parent.addConstraint(right)
+    left.addConstraint(right)
 }
 
 class NSLC {
     
-    var parent      : UIView
-    var metrics     : NSDictionary?
-    var options     : NSLayoutFormatOptions
-    
-    let subviews    = NSMutableDictionary()
+    var constraints = Array<NSLayoutConstraint>()   // all added constraints
+    let parent      : UIView?                       // constraints are added to parent (if provided)
+    let subviews    = NSMutableDictionary()         // named subviews dictionary
+    var metrics     : NSDictionary?                 // named metrics dictionary
+    var options     : NSLayoutFormatOptions         // visual layout format options
 
-    init(parent: UIView, metrics: NSDictionary? = nil, options: NSLayoutFormatOptions = .DirectionLeftToRight)
+    init(parent: UIView? = nil, metrics: NSDictionary? = nil, options: NSLayoutFormatOptions = .DirectionLeftToRight)
     {
         self.parent     = parent
         self.metrics    = metrics
@@ -93,18 +98,23 @@ class NSLC {
     // adds constraints from visual format string to self.constraints
     func addConstraints(visualFormat:String)
     {
-        parent.addConstraints(visualConstraints(visualFormat))
+        for constraint in visualConstraints(visualFormat) {
+            self.addConstraint(constraint)
+        }
     }
     
     // adds constraints from visual format string to self.constraints
     func addConstraint(constraint:NSLayoutConstraint)
     {
-        parent.addConstraint(constraint)
+        constraints += constraint
+        parent?.addConstraint(constraint)
     }
     
     // returns array of NSLayoutConstraints given a visual format string
-    func visualConstraints(visualFormat:String) -> NSArray! {
-        return NSLayoutConstraint.constraintsWithVisualFormat(visualFormat, options: self.options, metrics: self.metrics, views: self.subviews)
+    func visualConstraints(visualFormat:String) -> Array<NSLayoutConstraint>! {
+        let results = NSLayoutConstraint.constraintsWithVisualFormat(visualFormat, options: self.options, metrics: self.metrics, views: self.subviews)
+        
+        return results as Array<NSLayoutConstraint>
     }
     
     // returns a NSLayoutConstraint to make the same attribute equal on two items, with optional multiplier, constant and priority
