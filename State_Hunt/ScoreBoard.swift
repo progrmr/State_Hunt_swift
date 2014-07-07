@@ -129,6 +129,15 @@ class ScoreBoard {
         return stateCodes[index]
     }
     
+    func stateCodeForName(name: StateName) -> StateCode? {
+        for (stateCode:StateCode, stateName:StateName) in stateNameForCode {
+            if name == stateName {
+                return stateCode;
+            }
+        }
+        return nil
+    }
+    
     func dateSeen(index: StateIndex) -> NSDate? {
         let stateCode = stateCodeForIndex(index)
         return dateSeenForCode[stateCode]

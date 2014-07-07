@@ -46,7 +46,7 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
     
     // statesGeometry keyed by StateCode
     var stateQueryTask  : AGSQueryTask?
-    var stateQueryCode  : ScoreBoard.StateCode?
+    var missingGraphics : Array<ScoreBoard.StateCode> = Array()
     var stateGraphics   : Dictionary<ScoreBoard.StateCode,AGSGraphic> = Dictionary()
     
     var statusBarHidden : Bool = true
@@ -139,19 +139,6 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         }
         if doorSound == nil {
             doorSound = SoundFX(filePath:"close_door2", ofType:"wav")
-        }
-        
-        // get geometries for all seen states and highlight them on the map
-        for (stateCode, dateSeen) in scores.dateSeenForCode {
-            if let date = scores.dateSeenForCode[stateCode] {
-                if let graphicJSON : AnyObject = scores.saver.objectForKey("geometry_\(stateCode)") {
-                    // save the graphic for this state and highlight it on the map
-                    let stateGraphic = AGSGraphic(JSON: graphicJSON as NSDictionary)
-                    
-                    stateGraphics[stateCode] = stateGraphic
-                    self.highlightStateGeometry(stateGraphic, zoom: false)
-                }
-            }
         }
     }
 
@@ -275,6 +262,19 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         NSLog("layerDidLoad: %@", layer.name)
         
         self.zoomToUnitedStates()
+        
+        // get geometries for all seen states and highlight them on the map
+        for (stateCode, dateSeen) in scores.dateSeenForCode {
+            if let date = scores.dateSeenForCode[stateCode] {
+                if let graphicJSON : AnyObject = scores.saver.objectForKey("geometry_\(stateCode)") {
+                    // save the graphic for this state and highlight it on the map
+                    stateGraphics[stateCode] = AGSGraphic(JSON: graphicJSON as NSDictionary)
+                }
+                
+                // fetch geometry and zoom
+                self.fetchStateGeometry(stateCode, zoom: false)
+            }
+        }
     }
 
     //------------------------------------------
@@ -399,7 +399,8 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
             scores.markStateSeen(index)
             
             // fetch geometry for the state (if necessary)
-            self.fetchStateGeometry(index)
+            let stateCode = scores.stateCodeForIndex(index)
+            self.fetchStateGeometry(stateCode, zoom:true)
             
         } else {
             // Mark a "seen" state back to "unseen"
@@ -417,31 +418,41 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         headerView!.setScore(scores.numberOfStatesSeen())
     }
     
-    func fetchStateGeometry(index: ScoreBoard.StateIndex) {
-        let stateCode = scores.stateCodeForIndex(index)
-
+    func fetchStateGeometry(stateCode: ScoreBoard.StateCode, zoom: Bool) {
         if let graphic = stateGraphics[stateCode] {
             // we already have the graphic, just highlight it
-            self.highlightStateGeometry(graphic)
+            self.highlightStateGeometry(graphic, zoom:zoom)
             
         } else {
-            // geometry must be fetched from service
-            let stateName = scores.stateNameForCode[stateCode]
-            let query = AGSQuery()
-            query.returnGeometry        = true
-            query.outSpatialReference   = mapView!.spatialReference
-            query.`where`               = "STATE_NAME = '\(stateName)'"
-            query.outFields             = ["geometry", "STATE_NAME"];
+            // add state to queue that are missing geometries
+            missingGraphics += stateCode
             
-            let demographicsURL = NSURL(string: kDemographicsURLString)
-            stateQueryCode = stateCode
-            stateQueryTask = AGSQueryTask(URL: demographicsURL)
-            stateQueryTask!.delegate = self
-            stateQueryTask!.executeWithQuery(query)
+            if stateQueryTask == nil {
+                // there is no query task running, start one
+                startQueryForState()
+            }
         }
     }
 
-    func highlightStateGeometry(graphic: AGSGraphic, zoom: Bool = true) {
+    func startQueryForState() {
+        // geometry must be fetched from service
+        let stateCode = missingGraphics[0]
+        let stateName = scores.stateNameForCode[stateCode]
+        let query = AGSQuery()
+        query.returnGeometry        = true
+        query.outSpatialReference   = mapView!.spatialReference
+        query.`where`               = "STATE_NAME = '\(stateName)'"
+        query.outFields             = ["geometry", "STATE_NAME"];
+        
+        if stateQueryTask == nil {
+            let demographicsURL = NSURL(string: kDemographicsURLString)
+            stateQueryTask = AGSQueryTask(URL: demographicsURL)
+        }
+        stateQueryTask!.delegate = self
+        stateQueryTask!.executeWithQuery(query)
+    }
+    
+    func highlightStateGeometry(graphic: AGSGraphic, zoom: Bool) {
         graphic.symbol  = AGSSimpleFillSymbol(color: UIColor(rgba:0x77ff7740), outlineColor: UIColor(rgb:0x005500))
         graphicsLayer.addGraphic(graphic)
         
@@ -475,28 +486,42 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
     // AGSQueryTaskDelegate methods
     //------------------------------------------
     func queryTask(queryTask: AGSQueryTask!, operation op: NSOperation!, didExecuteWithFeatureSetResult featureSet: AGSFeatureSet!) {
+        // get the graphic from the returned featureSet
         let stateGraphic: AGSGraphic = featureSet.features[0] as AGSGraphic
         
-        if let code = stateQueryCode {
-            stateGraphics[code] = stateGraphic
-            
-            self.highlightStateGeometry(stateGraphic)
-            
-            // save stateGraphic to state data storage
-            let graphicJSON = stateGraphic.encodeToJSON()
-            scores.saver.setObject(graphicJSON, forKey: "geometry_\(code)")
-            scores.saver.synchronize()
+        if let stateName = stateGraphic.attributeForKey("STATE_NAME") as? String {
+            if let code = scores.stateCodeForName(stateName) {
+                println("query DONE for \(stateName) using \(code)")
+                
+                // remove code from queue of missing graphics
+                missingGraphics.removeAtIndex(0)
+                
+                // save graphic by code
+                stateGraphics[code] = stateGraphic
+                
+                self.highlightStateGeometry(stateGraphic, zoom: true)
+                
+                // save stateGraphic to state data storage
+                let graphicJSON = stateGraphic.encodeToJSON()
+                scores.saver.setObject(graphicJSON, forKey: "geometry_\(code)")
+                scores.saver.synchronize()
+            }
         }
         
-        stateQueryTask = nil
-        stateQueryCode = nil
+        if missingGraphics.count > 0 {
+            // start a query for the next missing one
+            startQueryForState()
+            
+        } else {
+            // nothing else to fetch, query task is done
+            stateQueryTask = nil
+        }
     }
 
     func queryTask(queryTask: AGSQueryTask!, operation op: NSOperation!, didFailWithError error: NSError!) {
         println("FAIL: \(error.description)")
         
         stateQueryTask = nil
-        stateQueryCode = nil
     }
     
 }
