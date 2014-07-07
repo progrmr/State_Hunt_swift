@@ -80,7 +80,8 @@ class SettingsVC : UIViewController {
         
         nslcs += NSLC.EQ(howToLabel, attr1:.CenterX, item2:view, attr2:.CenterX)
         nslcs += NSLC.EQ(resetButton, attr1:.CenterX, item2:view, attr2:.CenterX)
-        nslcs.addWidthToView(resetButton, width: 120)
+        
+        resetButton.setLayoutWidth(120)
     }
     
     override func viewWillAppear(animated: Bool) {

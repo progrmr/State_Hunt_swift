@@ -92,7 +92,8 @@ class WinnerVC : UIViewController {
         
         nslcs += NSLC.EQ(trophyView, attr1:.CenterX, item2:redView, attr2:.CenterX)
         nslcs += NSLC.EQ(trophyView, attr1:.Height, item2:trophyView, attr2:.Width)
-        nslcs.addWidthToView(trophyView, width: 150)
+        
+        trophyView.setLayoutWidth(150)
     }
     
     override func viewDidAppear(animated: Bool) {

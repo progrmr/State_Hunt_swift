@@ -162,22 +162,26 @@ class NSLC {
         return tmp
     }
     
-    
+}
+
+extension UIView {
+
     // adds a width constraint to a view
-    func addWidthToView(view:UIView, width:CGFloat, priority:UILayoutPriority = UILayoutPriority(UILayoutPriorityRequired))
+    func setLayoutWidth(width:CGFloat, priority:UILayoutPriority = UILayoutPriority(UILayoutPriorityRequired))
     {
-        let aConstraint = NSLayoutConstraint(item:view, attribute:.Width, relatedBy:.Equal, toItem:nil, attribute:.NotAnAttribute, multiplier:1, constant:width)
+        let aConstraint = NSLayoutConstraint(item:self, attribute:.Width, relatedBy:.Equal, toItem:nil, attribute:.NotAnAttribute, multiplier:1, constant:width)
         aConstraint.priority = priority
-        view.addConstraint(aConstraint)
+        self.addConstraint(aConstraint)
     }
     
     // adds a height constraint to a view
-    func addHeightToView(view:UIView, height:CGFloat, priority:UILayoutPriority = UILayoutPriority(UILayoutPriorityRequired))
+    func setLayoutHeight(height:CGFloat, priority:UILayoutPriority = UILayoutPriority(UILayoutPriorityRequired))
     {
-        let aConstraint = NSLayoutConstraint(item:view, attribute:.Width, relatedBy:.Equal, toItem:nil, attribute:.NotAnAttribute, multiplier:1, constant:height)
+        let aConstraint = NSLayoutConstraint(item:self, attribute:.Width, relatedBy:.Equal, toItem:nil, attribute:.NotAnAttribute, multiplier:1, constant:height)
         aConstraint.priority = priority
-        view.addConstraint(aConstraint)
+        self.addConstraint(aConstraint)
     }
+
     
 }
 
