@@ -428,10 +428,11 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
             
         } else {
             // geometry must be fetched from service
+            let stateName = scores.stateNameForCode[stateCode]
             let query = AGSQuery()
             query.returnGeometry        = true
             query.outSpatialReference   = mapView!.spatialReference
-            query.text                  = "\(scores.stateNameForCode[stateCode])"
+            query.`where`               = "STATE_NAME = '\(stateName)'"
             query.outFields             = ["geometry", "STATE_NAME"];
             
             let demographicsURL = NSURL(string: kDemographicsURLString)
@@ -462,7 +463,7 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
     }
     
     func zoomToGeometry(geometry: AGSGeometry) {
-        mapView?.zoomToGeometry(geometry, withPadding: 80, animated: true)
+        mapView?.zoomToGeometry(geometry, withPadding: 120, animated: true)
     }
     
     func zoomToUnitedStates() {

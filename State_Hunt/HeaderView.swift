@@ -55,7 +55,7 @@ class HeaderView : UICollectionReusableView {
     }
 
     func setScore(score: Int) {
-        summaryLabel.text = "\(score) States"
+        summaryLabel.text = (score == 1) ? "1 State" : "\(score) States"
         showAllButton.hidden = score < 1
     }
     
