@@ -61,12 +61,11 @@ class SettingsVC : UIViewController {
         doneButton.addTarget(self, action:"doneButtonPressed:", forControlEvents:.TouchUpInside)
        
         // add the reset button
-        resetButton.backgroundColor = UIColor(rgb:0x880000)
-        resetButton.tintColor       = UIColor.whiteColor()
-        resetButton.layer.cornerRadius      = 6
+        resetButton.selectedSegmentIndex    = UISegmentedControlNoSegment
+        resetButton.backgroundColor = UIColor.whiteColor()
+        resetButton.tintColor       = UIColor(rgb:0x880000)
+        resetButton.layer.cornerRadius      = 4
         resetButton.layer.masksToBounds     = true
-        resetButton.layer.borderColor       = UIColor.blackColor().CGColor
-        resetButton.layer.borderWidth       = 1
         resetButton.addTarget(self, action:"resetButtonPressed:", forControlEvents:.ValueChanged)
         
         // add auto layout constraints
@@ -85,24 +84,26 @@ class SettingsVC : UIViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
-        scoreLabel.text = "You have seen \(scores.numberOfStatesSeen()) states in \(scores.nDaysElapsed()) days."
+        let nSeen  = scores.numberOfStatesSeen()
+        let nDays  = scores.nDaysElapsed()
+        let states = (nSeen == 1) ? "state" : "states"
+        let days   = (nDays == 1) ? "day" : "days"
+        
+        scoreLabel.text = "You have seen \(nSeen) \(states) in \(nDays) \(days)."
     }
     
     func doneButtonPressed(button: UIButton) {
         self.dismissModalViewControllerAnimated(true)
     }
 
-    func resetButtonPressed(button: UIButton) {
-        // TODO not implemented yet
+    func resetButtonPressed(control: UISegmentedControl) {
+        self.resetButton.selectedSegmentIndex = UISegmentedControlNoSegment
+
         let message = "This will reset the \(scores.numberOfStatesSeen()) states you have collected.  Are you sure you want to erase everything and start over?"
         let alert = UIAlertController(title:"Reset All States", message:message, preferredStyle:.Alert)
         
-        let cancelAction = UIAlertAction(title:"Cancel", style:.Cancel,
-            handler: {(action: UIAlertAction!) in
-                self.dismissModalViewControllerAnimated(true)
-            })
-        
-        let resetAction = UIAlertAction(title:"Reset Everything", style:.Destructive,
+        let cancelAction = UIAlertAction(title:"Cancel", style:.Cancel, handler:nil)
+        let resetAction  = UIAlertAction(title:"Reset Everything", style:.Destructive,
             handler: {(action: UIAlertAction!) in
                 self.scores.resetAll()
                 self.dismissModalViewControllerAnimated(true)

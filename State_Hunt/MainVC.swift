@@ -152,6 +152,12 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         super.viewWillAppear(animated)
         
         listView?.reloadData()
+        
+        // check to see if a resetAll has occurred
+        if scores.dateSeenForCode.count == 0 {
+            self.graphicsLayer.removeAllGraphics()
+            self.zoomToUnitedStates() 
+        }
     }
     
     override func prefersStatusBarHidden() -> Bool {
