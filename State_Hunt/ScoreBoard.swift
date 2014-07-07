@@ -87,6 +87,24 @@ class ScoreBoard {
     init() {
         stateCodes = stateNameForCode.keysSortedByValue(<)
         
+        // Previous version of the app used StateSaver to save dates states
+        // were seen.  Try to read that file now.
+        let saver = StateSaver()
+        if saver.count() > 0 {
+            // init the dateSeenForCode dictionary so we can fill it from saver
+            dateSeenForCode = DateDictionary()
+
+            for i in 0 ... stateCodes.count-1 {
+                let code = stateCodes[i]
+                let object : AnyObject? = saver.objectForKey(code)
+                
+                if let dateNum = object as? NSNumber {
+                    let dateVal : Double = dateNum.doubleValue
+                    dateSeenForCode[code] = NSDate(timeIntervalSinceReferenceDate: dateVal)
+                }
+            }
+        }
+        
         // load datesSeenForCode from NSUserDefaults
         let defaults = NSUserDefaults.standardUserDefaults()
         let datesDictOptional: DateDictionary? = defaults.objectForKey(kDefaultsDateSeenKey) as? DateDictionary

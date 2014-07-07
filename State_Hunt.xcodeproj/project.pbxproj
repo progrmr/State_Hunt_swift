@@ -20,6 +20,7 @@
 		2CC69D081965F1D3005C415B /* NSDate+Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC69D071965F1D3005C415B /* NSDate+Operators.swift */; };
 		2CE429E719637ECE00FFE04E /* ArcGIS.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2CE429E619637ECE00FFE04E /* ArcGIS.bundle */; };
 		8E2F571C196ABC7E00B9DDE5 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8E2F571B196ABC7E00B9DDE5 /* Settings.bundle */; };
+		8E2F571F196AC9A200B9DDE5 /* StateSaver.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E2F571E196AC9A200B9DDE5 /* StateSaver.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8E4203C21964FF0C00FAE9C6 /* StateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4203C11964FF0C00FAE9C6 /* StateCell.swift */; };
 		8E4203C619650FA600FAE9C6 /* ScoreBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4203C519650FA600FAE9C6 /* ScoreBoard.swift */; };
 		8E4203C8196519D600FAE9C6 /* NSDictionary+Sort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4203C7196519D600FAE9C6 /* NSDictionary+Sort.swift */; };
@@ -57,7 +58,10 @@
 		2C828DE119699A7C009724FB /* CAAnimation+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CAAnimation+Additions.swift"; sourceTree = "<group>"; };
 		2CC69D071965F1D3005C415B /* NSDate+Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDate+Operators.swift"; sourceTree = "<group>"; };
 		2CE429E619637ECE00FFE04E /* ArcGIS.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = ArcGIS.bundle; path = ArcGIS.framework/Versions/Current/Resources/ArcGIS.bundle; sourceTree = ArcGISRT; };
+		8E2B3B82196ACEA700F27C95 /* State_Hunt-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "State_Hunt-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
 		8E2F571B196ABC7E00B9DDE5 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = SOURCE_ROOT; };
+		8E2F571D196AC9A200B9DDE5 /* StateSaver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StateSaver.h; path = ../../SDK_Utilities.repo/Utils/StateSaver.h; sourceTree = "<group>"; };
+		8E2F571E196AC9A200B9DDE5 /* StateSaver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StateSaver.m; path = ../../SDK_Utilities.repo/Utils/StateSaver.m; sourceTree = "<group>"; };
 		8E4203C11964FF0C00FAE9C6 /* StateCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateCell.swift; sourceTree = "<group>"; };
 		8E4203C31965077A00FAE9C6 /* state_data.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = state_data.csv; sourceTree = "<group>"; };
 		8E4203C519650FA600FAE9C6 /* ScoreBoard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoreBoard.swift; sourceTree = "<group>"; };
@@ -114,6 +118,7 @@
 		8E5D13271962E8C9001C6392 = {
 			isa = PBXGroup;
 			children = (
+				8E2B3B82196ACEA700F27C95 /* State_Hunt-Bridging-Header.h */,
 				8E5D13321962E8C9001C6392 /* State_Hunt */,
 				2C352D661967722B0011866A /* Resources */,
 				8E5D13331962E8C9001C6392 /* Supporting Files */,
@@ -150,6 +155,8 @@
 				8EA9B56A196715B600E63D3A /* GMButton.swift */,
 				8EA9B56C196722D200E63D3A /* UIColor+Additions.swift */,
 				2C828DE119699A7C009724FB /* CAAnimation+Additions.swift */,
+				8E2F571D196AC9A200B9DDE5 /* StateSaver.h */,
+				8E2F571E196AC9A200B9DDE5 /* StateSaver.m */,
 			);
 			path = State_Hunt;
 			sourceTree = "<group>";
@@ -329,6 +336,7 @@
 				8E78114519673869003BB7FC /* Theme.swift in Sources */,
 				8E4203C619650FA600FAE9C6 /* ScoreBoard.swift in Sources */,
 				2CC69D081965F1D3005C415B /* NSDate+Operators.swift in Sources */,
+				8E2F571F196AC9A200B9DDE5 /* StateSaver.m in Sources */,
 				8E78114719675619003BB7FC /* SoundFX.swift in Sources */,
 				2C828DE219699A7C009724FB /* CAAnimation+Additions.swift in Sources */,
 				8E5D13381962E8C9001C6392 /* MainVC.swift in Sources */,
@@ -454,6 +462,7 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "State_Hunt-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -477,6 +486,7 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "State_Hunt-Bridging-Header.h";
 			};
 			name = Release;
 		};

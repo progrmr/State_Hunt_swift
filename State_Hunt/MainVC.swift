@@ -146,7 +146,7 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
 
         for (stateCode, dateSeen) in scores.dateSeenForCode {
             if let date = scores.dateSeenForCode[stateCode] {
-                if let graphicJSON : AnyObject = defaults.objectForKey("stateCode_\(stateCode)") {
+                if let graphicJSON : AnyObject = defaults.objectForKey("geometry_\(stateCode)") {
                     // save the graphic for this state and highlight it on the map
                     let stateGraphic = AGSGraphic(JSON: graphicJSON as NSDictionary)
                     
@@ -487,7 +487,7 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
             // save stateGraphic to NSUserDefaults
             let defaults = NSUserDefaults.standardUserDefaults()
             let graphicJSON = stateGraphic.encodeToJSON()
-            defaults.setObject(graphicJSON, forKey:"stateCode_\(code)")
+            defaults.setObject(graphicJSON, forKey:"geometry_\(code)")
             defaults.synchronize()
         }
         
