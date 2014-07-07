@@ -11,9 +11,9 @@ import UIKit
 
 class HeaderView : UICollectionReusableView {
     
-    let infoButton      = GMButton()
+    let infoButton      = UIButton()
     let summaryLabel    = UILabel()
-    let showAllButton   = GMButton()
+    let showAllButton   = UIButton()
     
     convenience init() {
         self.init(frame: CGRectZero)
@@ -26,7 +26,7 @@ class HeaderView : UICollectionReusableView {
         
         infoButton.backgroundColor          = theme.kBackgroundColor
         infoButton.tintColor                = theme.kButtonTintColor
-        infoButton.titleEdgeInsets          = UIEdgeInsetsMake(0, 10, 0, 10)
+        infoButton.contentEdgeInsets        = UIEdgeInsetsMake(0, 10, 0, 10)
         let infoImage = UIImage(named: "724-info")
         infoButton.setImage(infoImage.imageWithRenderingMode(.AlwaysTemplate), forState:.Normal)
 
@@ -36,7 +36,7 @@ class HeaderView : UICollectionReusableView {
         
         showAllButton.backgroundColor       = theme.kBackgroundColor
         showAllButton.tintColor             = theme.kButtonTintColor
-        showAllButton.titleEdgeInsets       = UIEdgeInsetsMake(0, 10, 0, 10)
+        showAllButton.contentEdgeInsets     = UIEdgeInsetsMake(0, 10, 0, 10)
         let moreImage = UIImage(named: "1099-list")
         let lessImage = UIImage(named: "727-more")
         showAllButton.setImage(moreImage.imageWithRenderingMode(.AlwaysTemplate), forState:.Normal)

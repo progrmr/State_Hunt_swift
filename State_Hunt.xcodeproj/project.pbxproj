@@ -31,7 +31,6 @@
 		8E5D13531962F633001C6392 /* NSLC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E5D13521962F633001C6392 /* NSLC.swift */; };
 		8E78114519673869003BB7FC /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E78114419673869003BB7FC /* Theme.swift */; };
 		8E78114719675619003BB7FC /* SoundFX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E78114619675619003BB7FC /* SoundFX.swift */; };
-		8EA9B56B196715B600E63D3A /* GMButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EA9B56A196715B600E63D3A /* GMButton.swift */; };
 		8EA9B56D196722D200E63D3A /* UIColor+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EA9B56C196722D200E63D3A /* UIColor+Additions.swift */; };
 /* End PBXBuildFile section */
 
@@ -77,7 +76,6 @@
 		8E5D13521962F633001C6392 /* NSLC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSLC.swift; sourceTree = "<group>"; };
 		8E78114419673869003BB7FC /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		8E78114619675619003BB7FC /* SoundFX.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundFX.swift; sourceTree = "<group>"; };
-		8EA9B56A196715B600E63D3A /* GMButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMButton.swift; sourceTree = "<group>"; };
 		8EA9B56C196722D200E63D3A /* UIColor+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Additions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -152,7 +150,6 @@
 				8E4203C7196519D600FAE9C6 /* NSDictionary+Sort.swift */,
 				2CC69D071965F1D3005C415B /* NSDate+Operators.swift */,
 				8E5D13521962F633001C6392 /* NSLC.swift */,
-				8EA9B56A196715B600E63D3A /* GMButton.swift */,
 				8EA9B56C196722D200E63D3A /* UIColor+Additions.swift */,
 				2C828DE119699A7C009724FB /* CAAnimation+Additions.swift */,
 				2C14F22D196B2DD7009270E2 /* StateSaver.h */,
@@ -340,7 +337,6 @@
 				8E78114719675619003BB7FC /* SoundFX.swift in Sources */,
 				2C828DE219699A7C009724FB /* CAAnimation+Additions.swift in Sources */,
 				8E5D13381962E8C9001C6392 /* MainVC.swift in Sources */,
-				8EA9B56B196715B600E63D3A /* GMButton.swift in Sources */,
 				8E4203C8196519D600FAE9C6 /* NSDictionary+Sort.swift in Sources */,
 				8E5D13361962E8C9001C6392 /* AppDelegate.swift in Sources */,
 			);
