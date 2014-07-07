@@ -14,7 +14,7 @@ func radiansFromDegrees(degrees: Double) -> Double {
 
 extension CAAnimation {
    
-    class func shakeAnimation(duration: NSTimeInterval = 0.25, repeatCount: CFloat = 60, rotationAngle: Double = 3.0) -> CAAnimation
+    class func shakeAnimation(duration: NSTimeInterval = 0.25, repeatCount: CFloat = 60, rotationAngle: Double = 3.0) -> CAKeyframeAnimation
     {
         let animation = CAKeyframeAnimation(keyPath: "transform.rotation.z")
         
