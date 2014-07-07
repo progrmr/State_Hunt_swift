@@ -96,7 +96,7 @@ class WinnerVC : UIViewController {
     }
     
     override func viewDidAppear(animated: Bool) {
-        titleLabel.layer.addAnimation(shakeAnimation(), forKey: "shake")
+        titleLabel.layer.addAnimation(CAAnimation.shakeAnimation(), forKey: "shake")
 
         applauseSound.play()
         cheerSound.playAfterDelay(1)
