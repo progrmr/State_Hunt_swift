@@ -21,7 +21,7 @@ let kHeaderViewReuseId  = "kHeaderViewReuseId"
 let kInitialLatLong     = (lat: 39.0, long: -96.0)
 let kMapScaleInitial    = 150_000_000.0
 let kMapScaleMinimum    = 300_000_000.0
-let kMapScaleMaximum    =   2_000_000.0
+let kMapScaleMaximum    =   2_800_000.0
 
 class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, AGSQueryTaskDelegate {
     
