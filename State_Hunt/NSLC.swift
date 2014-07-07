@@ -12,14 +12,16 @@ import ArcGIS
 
 //-----------------------------------------------------------------------------
 // NSLC is a class that provides convenient methods for adding NSLayoutConstraints
-// to a view.  You can add visual format constraints with just one line of code.  
+// to a  parent view.  NSLC also setTranslatesAutoresizingMaskIntoConstraints to
+// false on all subviews added and makes them a subview of the parent view.
+//
 // Steps to use:
 //
 // (1) Instantiate NSLC with the parent view that will hold the constraints.  
 //
 //     let cons = NSLC(view)
 //
-// (2) Add names for subviews using a tuple:
+// (2) Add names for subviews using a tuple or an array:
 //
 //     cons += (name: "mapView",   view: mapView)
 //     cons += (name: "tableView", view: tableView)
