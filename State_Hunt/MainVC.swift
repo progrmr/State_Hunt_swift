@@ -46,9 +46,15 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
     
     // statesGeometry keyed by StateCode
     var stateQueryTask  : AGSQueryTask?
-    var missingGraphics : Array<ScoreBoard.StateCode> = Array()
     var stateGraphics   : Dictionary<ScoreBoard.StateCode,AGSGraphic> = Dictionary()
-    
+
+    // queue of states that are missing graphics
+    struct MissingState {
+        var stateCode: ScoreBoard.StateCode
+        var zoom: Bool
+    }
+    var missingGraphics : Array<MissingState> = Array()
+
     var statusBarHidden : Bool = true
     
     init(nibName nibNameOrNil: String!, bundle nibBundleOrNil: NSBundle!)
@@ -56,7 +62,7 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         // property init goes here
         dateFormatter.locale    = NSLocale.currentLocale()
         dateFormatter.dateStyle = .ShortStyle
-        dateFormatter.timeStyle = .NoStyle
+        dateFormatter.timeStyle = .ShortStyle
         
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil);
     }
@@ -425,7 +431,8 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
             
         } else {
             // add state to queue that are missing geometries
-            missingGraphics += stateCode
+            let missing = MissingState(stateCode: stateCode, zoom: zoom)
+            missingGraphics += missing
             
             if stateQueryTask == nil {
                 // there is no query task running, start one
@@ -436,8 +443,8 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
 
     func startQueryForState() {
         // geometry must be fetched from service
-        let stateCode = missingGraphics[0]
-        let stateName = scores.stateNameForCode[stateCode]
+        let missing   = missingGraphics[0]
+        let stateName = scores.stateNameForCode[missing.stateCode]
         let query = AGSQuery()
         query.returnGeometry        = true
         query.outSpatialReference   = mapView!.spatialReference
@@ -494,12 +501,12 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
                 println("query DONE for \(stateName) using \(code)")
                 
                 // remove code from queue of missing graphics
-                missingGraphics.removeAtIndex(0)
+                let missing = missingGraphics.removeAtIndex(0)
                 
                 // save graphic by code
                 stateGraphics[code] = stateGraphic
                 
-                self.highlightStateGeometry(stateGraphic, zoom: true)
+                self.highlightStateGeometry(stateGraphic, zoom: missing.zoom)
                 
                 // save stateGraphic to state data storage
                 let graphicJSON = stateGraphic.encodeToJSON()
