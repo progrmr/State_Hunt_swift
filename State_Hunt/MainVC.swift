@@ -142,11 +142,9 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         }
         
         // get geometries for all seen states and highlight them on the map
-        let defaults = NSUserDefaults.standardUserDefaults()
-
         for (stateCode, dateSeen) in scores.dateSeenForCode {
             if let date = scores.dateSeenForCode[stateCode] {
-                if let graphicJSON : AnyObject = defaults.objectForKey("geometry_\(stateCode)") {
+                if let graphicJSON : AnyObject = scores.saver.objectForKey("geometry_\(stateCode)") {
                     // save the graphic for this state and highlight it on the map
                     let stateGraphic = AGSGraphic(JSON: graphicJSON as NSDictionary)
                     
@@ -484,11 +482,10 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
             
             self.highlightStateGeometry(stateGraphic)
             
-            // save stateGraphic to NSUserDefaults
-            let defaults = NSUserDefaults.standardUserDefaults()
+            // save stateGraphic to state data storage
             let graphicJSON = stateGraphic.encodeToJSON()
-            defaults.setObject(graphicJSON, forKey:"geometry_\(code)")
-            defaults.synchronize()
+            scores.saver.setObject(graphicJSON, forKey: "geometry_\(code)")
+            scores.saver.synchronize()
         }
         
         stateQueryTask = nil

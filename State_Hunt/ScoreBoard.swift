@@ -18,10 +18,12 @@ let kDemographicsURLString = "http://sampleserver1.arcgisonline.com/ArcGIS/rest/
 
 class ScoreBoard {
     
-    typealias StateIndex = Int
-    typealias StateName  = String
+    typealias StateIndex = Int          // 50 states, index 0..49
+    typealias StateName  = String       // Mixed case, full name of state
     typealias StateCode  = String       // 2 letter uppercase state code
-    
+
+    typealias DateDictionary = Dictionary<StateCode,NSDate>
+
     let stateNameForCode : Dictionary<StateCode,StateName> = [
             "AL" : "Alabama"        ,
             "AK" : "Alaska"         ,
@@ -74,11 +76,13 @@ class ScoreBoard {
             "WI" : "Wisconsin"      ,
             "WY" : "Wyoming"        ]
     
-    // Array of 2 letter state codes sorted by the states full name
+    // State Storage for persistent state data
+    let saver            = StateSaver()             // reads file if there
+    
+    // Array of 2 letter state codes sorted by the state's full name
     let stateCodes       : Array<StateCode>
     
     // Dictionary keyed by state code containing the NSDate when it was seen
-    typealias DateDictionary = Dictionary<StateCode,NSDate>
     var dateSeenForCode  : DateDictionary
     
     //------------------------------------------
@@ -86,33 +90,21 @@ class ScoreBoard {
     //------------------------------------------
     init() {
         stateCodes = stateNameForCode.keysSortedByValue(<)
+        dateSeenForCode = DateDictionary()
         
         // Previous version of the app used StateSaver to save dates states
         // were seen.  Try to read that file now.
-        let saver = StateSaver()
         if saver.count() > 0 {
-            // init the dateSeenForCode dictionary so we can fill it from saver
-            dateSeenForCode = DateDictionary()
-
-            for i in 0 ... stateCodes.count-1 {
-                let code = stateCodes[i]
-                let object : AnyObject? = saver.objectForKey(code)
+            // look for the 50 states in the saved state data
+            for stateCode in stateCodes {
+                let object : AnyObject? = saver.objectForKey(stateCode)
                 
+                // read the NSNumber of the NSDate's time interval since the reference date
                 if let dateNum = object as? NSNumber {
                     let dateVal : Double = dateNum.doubleValue
-                    dateSeenForCode[code] = NSDate(timeIntervalSinceReferenceDate: dateVal)
+                    dateSeenForCode[stateCode] = NSDate(timeIntervalSinceReferenceDate: dateVal)
                 }
             }
-        }
-        
-        // load datesSeenForCode from NSUserDefaults
-        let defaults = NSUserDefaults.standardUserDefaults()
-        let datesDictOptional: DateDictionary? = defaults.objectForKey(kDefaultsDateSeenKey) as? DateDictionary
-        
-        if let datesDict = datesDictOptional {
-            dateSeenForCode = datesDict
-        } else {
-            dateSeenForCode = DateDictionary()
         }
     }
     
@@ -149,27 +141,24 @@ class ScoreBoard {
     
     func markStateSeen(index: StateIndex) {
         let stateCode = stateCodeForIndex(index)
-        let date = dateSeenForCode[stateCode]
         
-        if (date == nil) {
-            // state hasn't been seen yet, mark it now
-            dateSeenForCode[stateCode] = NSDate()
-            
-            // save datesSeenForCode to NSUserDefaults
-            let defaults = NSUserDefaults.standardUserDefaults()
-            defaults.setObject(dateSeenForCode, forKey:kDefaultsDateSeenKey)
-            defaults.synchronize()
-        }
+        // mark state seen with current date/time
+        let now = NSDate()
+        dateSeenForCode[stateCode] = now
+        
+        // save datesSeenForCode to state data
+        let dateNum = NSNumber(double: now.timeIntervalSinceReferenceDate)
+        saver.setObject(dateNum, forKey:stateCode)
+        saver.synchronize()
     }
     
     func unmarkStateSeen(index: StateIndex) {
         let stateCode = stateCodeForIndex(index)
        
-        if let date = dateSeenForCode.removeValueForKey(stateCode) {
-            // save datesSeenForCode to NSUserDefaults
-            let defaults = NSUserDefaults.standardUserDefaults()
-            defaults.setObject(dateSeenForCode, forKey:kDefaultsDateSeenKey)
-            defaults.synchronize()
+        if let date : NSDate = dateSeenForCode.removeValueForKey(stateCode) {
+            // remove date seen from the saved state data
+            saver.setObject(nil, forKey:stateCode)
+            saver.synchronize()
         }
     }
     
