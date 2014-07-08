@@ -38,8 +38,8 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
     var showDetails   = false
     var scores        = ScoreBoard()
     
-    var clickSound    : SoundFX?
-    var doorSound     : SoundFX?
+    let clickSound    = SoundFX(filePath:"click", ofType:"wav")
+    let doorSound     = SoundFX(filePath:"close_door2", ofType:"wav")
     var cheerSound    : SoundFX?
     var applauseSound : SoundFX?
     var oohSound      : SoundFX?
@@ -63,7 +63,7 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         dateFormatter.locale    = NSLocale.currentLocale()
         dateFormatter.dateStyle = .ShortStyle
         dateFormatter.timeStyle = .ShortStyle
-        
+
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil);
     }
     
@@ -136,18 +136,6 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         nslc += NSLC.EQ(backdrop, attr1:.Bottom, item2:self.topLayoutGuide, attr2:.Bottom)
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view....
-        
-        if clickSound == nil {
-            clickSound = SoundFX(filePath:"click", ofType:"wav")
-        }
-        if doorSound == nil {
-            doorSound = SoundFX(filePath:"close_door2", ofType:"wav")
-        }
-    }
-
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -167,7 +155,7 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
     func markNewStateSeen(stateIndex: ScoreBoard.StateIndex) {
         // set the seen flag for that state row
         setState(stateIndex, seen:true)
-        clickSound?.play()
+        clickSound.play()
         
         let numSeen = scores.numberOfStatesSeen()
         var oMessage : String?
@@ -179,7 +167,7 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
             //--------------------------------------
             let winnerVC = WinnerVC(nibName:"WinnerVC", bundle:nil, scoreBoard:scores)
             
-            self.presentModalViewController(winnerVC, animated: true)
+            self.presentViewController(winnerVC, animated: true, completion:nil)
             
         case 45:
             oMessage        = "Super Fantastic, you've seen \(numSeen) states!  Only a few hard to get states left."
@@ -233,7 +221,7 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         if (timeSinceSeen < 300) {
             // they just saw this within the past few minutes, go ahead an unmark it without asking
             self.setState(stateIndex, seen:false)
-            self.clickSound?.play()
+            self.clickSound.play()
             
         } else {
             // it's been a while since this was marked, ask before unmarking it
@@ -256,7 +244,7 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
             let yesAction = UIAlertAction(title:"Yes", style:.Default,
                 handler: {(action: UIAlertAction!) in
                     self.setState(stateIndex, seen:false)
-                    self.clickSound?.play()
+                    self.clickSound.play()
                 })
             
             alert.addAction(cancelAction)
@@ -299,7 +287,7 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         
         var indexPaths = Array<NSIndexPath>()
         
-        for row in 0..scores.stateCodes.count-1 {
+        for row in 0 ..< scores.stateCodes.count {
             let code = scores.stateCodes[row]
             if let date = scores.dateSeenForCode[code] {
                 let indexPath = NSIndexPath(forRow:row, inSection:0)
@@ -312,14 +300,14 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         }
         
         if scores.numberOfStatesSeen() > 0 {
-            doorSound?.play()
+            doorSound.play()
         }
 
     }
 
     func infoButtonPressed() {
         let settingsVC = SettingsVC(nibName: nil, bundle: nil, scoreBoard: scores)
-        self.presentModalViewController(settingsVC, animated:true)
+        self.presentViewController(settingsVC, animated: true, completion: nil)
     }
     
     //------------------------------------------

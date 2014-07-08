@@ -94,7 +94,7 @@ class SettingsVC : UIViewController {
     }
     
     func doneButtonPressed(button: UIButton) {
-        self.dismissModalViewControllerAnimated(true)
+        self.dismissViewControllerAnimated(true, completion:nil)
     }
 
     func resetButtonPressed(control: UISegmentedControl) {
@@ -107,7 +107,7 @@ class SettingsVC : UIViewController {
         let resetAction  = UIAlertAction(title:"Reset Everything", style:.Destructive,
             handler: {(action: UIAlertAction!) in
                 self.scores.resetAll()
-                self.dismissModalViewControllerAnimated(true)
+                self.dismissViewControllerAnimated(true, completion:nil)
             })
         
         alert.addAction(cancelAction)

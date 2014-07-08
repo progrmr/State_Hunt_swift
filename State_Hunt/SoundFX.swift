@@ -69,7 +69,7 @@ class SoundFX {
     func playAfterDelay(seconds: NSTimeInterval) {
         let delay = seconds * Double(NSEC_PER_SEC)
         let time  = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
-        dispatch_after(time, dispatch_get_current_queue()) {
+        dispatch_after(time, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) {
             self.play()
         }
     }

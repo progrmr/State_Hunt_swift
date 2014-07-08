@@ -191,7 +191,7 @@ class ScoreBoard {
     }
 
     func resetAll() {
-        for i in 0 ... numberOfStates()-1 {
+        for i in 0 ..< numberOfStates() {
             unmarkStateSeen(i)
         }
     }
