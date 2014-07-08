@@ -38,6 +38,9 @@ import Foundation
 //
 //-----------------------------------------------------------------------------
 
+// remove when linker bug fixed and UILayoutPriorityRequired can be used again
+let k_UILayoutPriorityRequired: UILayoutPriority = 1000
+
 // adds a named view for use with visual layout
 @assignment func += (inout left: NSLC, right: (name:String, subview:UIView)) {
     // make sure subview is setup for auto layout
@@ -123,7 +126,7 @@ class NSLC {
         item2: AnyObject!,
         attr:  NSLayoutAttribute,
         constant: CGFloat = 0,
-        priority: UILayoutPriority = UILayoutPriorityRequired) -> NSLayoutConstraint
+        priority: UILayoutPriority = k_UILayoutPriorityRequired) -> NSLayoutConstraint
     {
         let tmp = NSLayoutConstraint(item:item1, attribute:attr, relatedBy:.Equal, toItem:item2, attribute:attr, multiplier:multiplier, constant:constant)
         tmp.priority = priority
@@ -137,7 +140,7 @@ class NSLC {
         item2: AnyObject!,
         attr2: NSLayoutAttribute,
         constant: CGFloat = 0,
-        priority: UILayoutPriority = UILayoutPriorityRequired) -> NSLayoutConstraint
+        priority: UILayoutPriority = k_UILayoutPriorityRequired) -> NSLayoutConstraint
     {
         let tmp = NSLayoutConstraint(item:item1, attribute:attr1, relatedBy:.Equal, toItem:item2, attribute:attr2, multiplier:multiplier, constant:constant)
         tmp.priority = priority
@@ -151,7 +154,7 @@ class NSLC {
         item2: AnyObject? = nil,
         attr2: NSLayoutAttribute,
         constant: CGFloat = 0,
-        priority: UILayoutPriority = UILayoutPriorityRequired) -> NSLayoutConstraint
+        priority: UILayoutPriority = k_UILayoutPriorityRequired) -> NSLayoutConstraint
     {
         let tmp = NSLayoutConstraint(item:item1, attribute:attr1, relatedBy:.LessThanOrEqual, toItem:item2, attribute:attr2, multiplier:multiplier, constant:constant)
         tmp.priority = priority
@@ -165,7 +168,7 @@ class NSLC {
         item2: AnyObject!,
         attr2: NSLayoutAttribute,
         constant: CGFloat = 0,
-        priority: UILayoutPriority = UILayoutPriorityRequired) -> NSLayoutConstraint
+        priority: UILayoutPriority = k_UILayoutPriorityRequired) -> NSLayoutConstraint
     {
         let tmp = NSLayoutConstraint(item:item1, attribute:attr1, relatedBy:.GreaterThanOrEqual, toItem:item2, attribute:attr2, multiplier:multiplier, constant:constant)
         tmp.priority = priority
@@ -177,7 +180,7 @@ class NSLC {
 extension UIView {
 
     // adds a width constraint to a view
-    func setLayoutWidth(width:CGFloat, priority:UILayoutPriority = UILayoutPriorityRequired)
+    func setLayoutWidth(width:CGFloat, priority:UILayoutPriority = k_UILayoutPriorityRequired)
     {
         let aConstraint = NSLayoutConstraint(item:self, attribute:.Width, relatedBy:.Equal, toItem:nil, attribute:.NotAnAttribute, multiplier:1, constant:width)
         aConstraint.priority = priority
@@ -185,7 +188,7 @@ extension UIView {
     }
     
     // adds a height constraint to a view
-    func setLayoutHeight(height:CGFloat, priority:UILayoutPriority = UILayoutPriorityRequired)
+    func setLayoutHeight(height:CGFloat, priority:UILayoutPriority = k_UILayoutPriorityRequired)
     {
         let aConstraint = NSLayoutConstraint(item:self, attribute:.Width, relatedBy:.Equal, toItem:nil, attribute:.NotAnAttribute, multiplier:1, constant:height)
         aConstraint.priority = priority
