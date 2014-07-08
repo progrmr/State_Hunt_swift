@@ -24,7 +24,7 @@ extension Dictionary {
     func keysSortedByValueFaster(isOrderedBefore:(ValueType, ValueType) -> Bool) -> [KeyType] {
         var array = Array(self)
 
-        array.sorted {
+        array.sort {
             let (lk, lv) = $0
             let (rk, rv) = $1
             return isOrderedBefore(lv, rv)
