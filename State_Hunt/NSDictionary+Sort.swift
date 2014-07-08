@@ -1,8 +1,7 @@
 //
 //  NSDictionary+Sort.swift
 //
-//  Thanks to David:
-//     http://stackoverflow.com/questions/24090016/sort-dictionary-by-values-in-swift
+//  Thanks to David:  http://stackoverflow.com/a/24090641/1693173
 //
 
 import Foundation
@@ -10,7 +9,7 @@ import Foundation
 extension Dictionary {
 
     func sortedKeys(isOrderedBefore:(KeyType,KeyType) -> Bool) -> [KeyType] {
-        return sort(Array(self.keys), isOrderedBefore)
+        return Array(self.keys).sorted(isOrderedBefore)
     }
     
     // Slower because of a lot of lookups, but probably takes less memory
@@ -23,14 +22,18 @@ extension Dictionary {
     
     // Faster because of no lookups, may take more memory because of duplicating contents
     func keysSortedByValueFaster(isOrderedBefore:(ValueType, ValueType) -> Bool) -> [KeyType] {
-        return sort(Array(self), {
+        var array = Array(self)
+
+        array.sorted {
             let (lk, lv) = $0
             let (rk, rv) = $1
             return isOrderedBefore(lv, rv)
-            }).map({
-                let (k, v) = $0
-                return k
-                })
+        }
+
+       return array.map {
+            let (k, v) = $0
+            return k
+        }
     }
 
 }
