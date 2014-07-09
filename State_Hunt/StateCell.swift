@@ -27,6 +27,7 @@ class StateCell: UICollectionViewCell {
         titleLabel.textAlignment                = .Center
         titleLabel.minimumScaleFactor           = 0.75
         titleLabel.adjustsFontSizeToFitWidth    = true
+        titleLabel.accessibilityTraits          |= UIAccessibilityTraitButton | UIAccessibilityTraitUpdatesFrequently
         
         detailLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
         detailLabel.backgroundColor             = theme.kBackgroundColor

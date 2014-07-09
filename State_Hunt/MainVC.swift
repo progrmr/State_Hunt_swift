@@ -272,6 +272,7 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         showDetails = !showDetails
         
         headerView!.showAllButton.selected = showDetails
+        headerView!.showAllButton.accessibilityLabel = showDetails ? "less detail" : "more detail"
         
         var indexPaths = Array<NSIndexPath>()
         
@@ -330,6 +331,9 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         let seen    = scores.wasSeen(row)
         var cell    = listView!.dequeueReusableCellWithReuseIdentifier(kStateCellReuseId, forIndexPath: indexPath) as StateCell
         
+        let stateCode = scores.stateCodeForIndex(row)
+        let stateName = scores.stateNameForIndex(row)
+        
         if (seen) {
             // State HAS been seen
             cell.contentView.backgroundColor    = theme.kSeenBackgroundColor
@@ -339,18 +343,21 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
             
             if (showDetails) {
                 let dateSeen = scores.dateSeen(row)
-                cell.titleLabel.text            = scores.stateNameForIndex(row)
+                cell.titleLabel.text            = stateName
                 cell.detailLabel.text           = dateFormatter.stringFromDate(dateSeen)
                 cell.detailLabel.textColor      = theme.kSeenTextColor
                 
             } else {
-                cell.titleLabel.text            = scores.stateCodeForIndex(row)
+                cell.titleLabel.text            = stateCode
             }
             
         } else {
             // State has NOT been seen
-            cell.titleLabel.text                = scores.stateNameForIndex(row)
+            cell.titleLabel.text                = stateName
         }
+        
+        let verb = seen ? "got" : "need"
+        cell.titleLabel.accessibilityLabel = "\(verb) \(stateName)"
         
         return cell;
     }
