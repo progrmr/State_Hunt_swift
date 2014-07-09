@@ -17,3 +17,6 @@ xcdebugger
 # svn & cvs
 .svn
 CVS
+
+# app archives
+*.ipa
