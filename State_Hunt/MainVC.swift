@@ -23,6 +23,11 @@ let kMapScaleInitial    = 150_000_000.0
 let kMapScaleMinimum    = 300_000_000.0
 let kMapScaleMaximum    =   2_800_000.0
 
+let kNormalFillRGBA     : UInt32 = 0x77ff7740
+let kNormalBorderRGBA   : UInt32 = 0x006600ff
+let kSelectedFillRGBA   : UInt32 = 0xaaffaa80
+let kSelectedBorderRGBA : UInt32 = 0x00ee00ff
+
 class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, AGSQueryTaskDelegate {
     
     // views
@@ -404,11 +409,28 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
     
     func highlightStateGeometry(stateCode: ScoreBoard.StateCode, zoom: Bool) {
         if let graphic = scores.stateGraphics[stateCode] {
-            graphic.symbol  = AGSSimpleFillSymbol(color: UIColor(rgba:0x77ff7740), outlineColor: UIColor(rgb:0x005500))
-            graphicsLayer.addGraphic(graphic)
-            
             if zoom {
+                // init the symbol with the "selected" colors
+                updateStateColor(stateCode, seen: true, normal: false)
+                
+                // zoom to the geometry
                 self.zoomToGeometry(graphic.geometry)
+
+                // after a few seconds, change the color to normal
+                let delay = 2 * Double(NSEC_PER_SEC)
+                let time  = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+                
+                dispatch_after(time, dispatch_get_main_queue()) {
+                    // check seen date, it might have changed during the delay period
+                    if let date = self.scores.dateSeenForCode[stateCode] {
+                        self.updateStateColor(stateCode, seen: true, normal: true)
+                    }
+                }
+                
+            } else {
+                // not zooming, just set the final fill colors
+                graphic.symbol  = AGSSimpleFillSymbol(color: UIColor(rgba:kNormalFillRGBA), outlineColor: UIColor(rgba:kNormalBorderRGBA))
+                graphicsLayer.addGraphic(graphic)
             }
         }
     }
@@ -416,11 +438,25 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
     func unhighlightStateGeometry(index: ScoreBoard.StateIndex) {
         let stateCode = scores.stateCodeForIndex(index)
         
-        if let graphic = scores.stateGraphics[stateCode] {
-            graphicsLayer.removeGraphic(graphic)
-        }
+        updateStateColor(stateCode, seen:false)
         
         self.zoomToUnitedStates()
+    }
+    
+    func updateStateColor(stateCode: ScoreBoard.StateCode, seen: Bool, normal: Bool = true) {
+        if let graphic = scores.stateGraphics[stateCode] {
+            if graphic.layer {
+                graphic.layer.removeGraphic(graphic)
+            }
+
+            if seen {
+                // state has been seen, set it's colors
+                let fillRGBA    = normal ? kNormalFillRGBA   : kSelectedFillRGBA
+                let outlineRGBA = normal ? kNormalBorderRGBA : kSelectedBorderRGBA
+                graphic.symbol = AGSSimpleFillSymbol(color: UIColor(rgba:fillRGBA), outlineColor: UIColor(rgba:outlineRGBA))
+                graphicsLayer.addGraphic(graphic)
+            }
+        }
     }
     
     func zoomToGeometry(geometry: AGSGeometry) {
