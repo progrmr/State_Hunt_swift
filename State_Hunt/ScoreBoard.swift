@@ -85,12 +85,35 @@ class ScoreBoard {
     // Dictionary keyed by state code containing the NSDate when it was seen
     var dateSeenForCode  : DateDictionary
     
+    // Dictionary keyed by state code containing the AGSGraphic for each state
+    let stateGraphics  : Dictionary<StateCode,AGSGraphic>
+    
     //------------------------------------------
     // initializers
     //------------------------------------------
     init() {
         stateCodes = stateNameForCode.keysSortedByValue(<)
         dateSeenForCode = DateDictionary()
+        
+        // read the states_geometry.plist file from the bundle
+        let bundlePath = NSBundle.mainBundle().bundlePath
+        let statesFilePath = bundlePath.stringByAppendingPathComponent("states_geometry.plist")
+        let geoData = NSMutableDictionary(contentsOfFile: statesFilePath)
+        var tmpGeoDict = Dictionary<StateCode,AGSGraphic>()
+        let sr102100 = AGSSpatialReference(WKID: 102100)
+        
+        for (stateCode, geometryJSON) in geoData {
+            println("\(stateCode) with \(geometryJSON.count)")
+            
+            let json = geometryJSON as [NSObject:AnyObject]
+            let geo  = AGSGeometry(JSON: json, spatialReference: sr102100) as AGSGeometry
+            let code = stateCode as StateCode
+            let graphic = AGSGraphic(geometry: geo, symbol: nil, attributes: nil)
+            tmpGeoDict[code] = graphic
+        }
+        
+        stateGraphics = tmpGeoDict
+        
         
         // Previous version of the app used StateSaver to save dates states
         // were seen.  Try to read that file now.
