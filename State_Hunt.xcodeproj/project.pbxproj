@@ -32,6 +32,14 @@
 		8E78114519673869003BB7FC /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E78114419673869003BB7FC /* Theme.swift */; };
 		8E78114719675619003BB7FC /* SoundFX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E78114619675619003BB7FC /* SoundFX.swift */; };
 		8EA9B56D196722D200E63D3A /* UIColor+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EA9B56C196722D200E63D3A /* UIColor+Additions.swift */; };
+		8ED56049196CDA5200968B17 /* GMAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED56048196CDA5200968B17 /* GMAlertView.m */; };
+		8ED5604C196CED7800968B17 /* 1099-list.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ED5604A196CED7800968B17 /* 1099-list.png */; };
+		8ED5604D196CED7800968B17 /* 1099-list@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ED5604B196CED7800968B17 /* 1099-list@2x.png */; };
+		8ED56053196CEDC700968B17 /* 724-info.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ED5604E196CEDC700968B17 /* 724-info.png */; };
+		8ED56054196CEDC700968B17 /* 724-info@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ED5604F196CEDC700968B17 /* 724-info@2x.png */; };
+		8ED56055196CEDC700968B17 /* 727-more.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ED56050196CEDC700968B17 /* 727-more.png */; };
+		8ED56056196CEDC700968B17 /* 727-more@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ED56051196CEDC700968B17 /* 727-more@2x.png */; };
+		8ED56057196CEDC700968B17 /* trophy.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ED56052196CEDC700968B17 /* trophy.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,7 +66,7 @@
 		2C828DDF19698C50009724FB /* WinnerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WinnerVC.swift; sourceTree = "<group>"; };
 		2C828DE119699A7C009724FB /* CAAnimation+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CAAnimation+Additions.swift"; sourceTree = "<group>"; };
 		2CC69D071965F1D3005C415B /* NSDate+Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDate+Operators.swift"; sourceTree = "<group>"; };
-		2CE429E619637ECE00FFE04E /* ArcGIS.bundle */ = {isa = PBXFileReference; name = ArcGIS.bundle; path = ArcGIS.framework/Versions/Current/Resources/ArcGIS.bundle; sourceTree = ArcGISRT; };
+		2CE429E619637ECE00FFE04E /* ArcGIS.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = ArcGIS.bundle; path = ArcGIS.framework/Versions/Current/Resources/ArcGIS.bundle; sourceTree = ArcGISRT; };
 		8E2B3B82196ACEA700F27C95 /* State_Hunt-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "State_Hunt-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
 		8E2F571B196ABC7E00B9DDE5 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = SOURCE_ROOT; };
 		8E4203C11964FF0C00FAE9C6 /* StateCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateCell.swift; sourceTree = "<group>"; };
@@ -77,6 +85,15 @@
 		8E78114419673869003BB7FC /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		8E78114619675619003BB7FC /* SoundFX.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundFX.swift; sourceTree = "<group>"; };
 		8EA9B56C196722D200E63D3A /* UIColor+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Additions.swift"; sourceTree = "<group>"; };
+		8ED56047196CDA5200968B17 /* GMAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMAlertView.h; sourceTree = "<group>"; };
+		8ED56048196CDA5200968B17 /* GMAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GMAlertView.m; sourceTree = "<group>"; };
+		8ED5604A196CED7800968B17 /* 1099-list.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "1099-list.png"; sourceTree = "<group>"; };
+		8ED5604B196CED7800968B17 /* 1099-list@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "1099-list@2x.png"; sourceTree = "<group>"; };
+		8ED5604E196CEDC700968B17 /* 724-info.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "724-info.png"; sourceTree = "<group>"; };
+		8ED5604F196CEDC700968B17 /* 724-info@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "724-info@2x.png"; sourceTree = "<group>"; };
+		8ED56050196CEDC700968B17 /* 727-more.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "727-more.png"; sourceTree = "<group>"; };
+		8ED56051196CEDC700968B17 /* 727-more@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "727-more@2x.png"; sourceTree = "<group>"; };
+		8ED56052196CEDC700968B17 /* trophy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trophy.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +117,13 @@
 		2C352D661967722B0011866A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8ED5604A196CED7800968B17 /* 1099-list.png */,
+				8ED5604B196CED7800968B17 /* 1099-list@2x.png */,
+				8ED5604E196CEDC700968B17 /* 724-info.png */,
+				8ED5604F196CEDC700968B17 /* 724-info@2x.png */,
+				8ED56050196CEDC700968B17 /* 727-more.png */,
+				8ED56051196CEDC700968B17 /* 727-more@2x.png */,
+				8ED56052196CEDC700968B17 /* trophy.png */,
 				2C352D67196772670011866A /* applause.mp3 */,
 				2C352D68196772670011866A /* cheer_8k.wav */,
 				2C352D69196772670011866A /* click.wav */,
@@ -154,6 +178,8 @@
 				2C828DE119699A7C009724FB /* CAAnimation+Additions.swift */,
 				2C14F22D196B2DD7009270E2 /* StateSaver.h */,
 				2C14F22E196B2DD7009270E2 /* StateSaver.m */,
+				8ED56047196CDA5200968B17 /* GMAlertView.h */,
+				8ED56048196CDA5200968B17 /* GMAlertView.m */,
 			);
 			path = State_Hunt;
 			sourceTree = "<group>";
@@ -268,11 +294,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				2CE429E719637ECE00FFE04E /* ArcGIS.bundle in Resources */,
+				8ED56055196CEDC700968B17 /* 727-more.png in Resources */,
 				2C352D6E196772670011866A /* cheer_8k.wav in Resources */,
+				8ED5604D196CED7800968B17 /* 1099-list@2x.png in Resources */,
 				8E2F571C196ABC7E00B9DDE5 /* Settings.bundle in Resources */,
+				8ED56054196CEDC700968B17 /* 724-info@2x.png in Resources */,
+				8ED56057196CEDC700968B17 /* trophy.png in Resources */,
 				2C352D6D196772670011866A /* applause.mp3 in Resources */,
+				8ED56056196CEDC700968B17 /* 727-more@2x.png in Resources */,
+				8ED56053196CEDC700968B17 /* 724-info.png in Resources */,
 				2C352D72196772670011866A /* ooh.mp3 in Resources */,
 				2C352D6F196772670011866A /* click.wav in Resources */,
+				8ED5604C196CED7800968B17 /* 1099-list.png in Resources */,
 				2C352D71196772670011866A /* crowd_homerun_applause.wav in Resources */,
 				2C352D70196772670011866A /* close_door2.wav in Resources */,
 				8E5D133D1962E8C9001C6392 /* Images.xcassets in Resources */,
@@ -339,6 +372,7 @@
 				8E5D13381962E8C9001C6392 /* MainVC.swift in Sources */,
 				8E4203C8196519D600FAE9C6 /* NSDictionary+Sort.swift in Sources */,
 				8E5D13361962E8C9001C6392 /* AppDelegate.swift in Sources */,
+				8ED56049196CDA5200968B17 /* GMAlertView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -395,7 +429,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				METAL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -431,7 +465,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				METAL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -447,7 +481,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = "$(HOME)/Library/SDKs/ArcGIS/iOS/";
 				INFOPLIST_FILE = State_Hunt/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -471,7 +505,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = "$(HOME)/Library/SDKs/ArcGIS/iOS/";
 				INFOPLIST_FILE = State_Hunt/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"-ObjC",

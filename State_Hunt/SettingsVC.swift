@@ -100,20 +100,20 @@ class SettingsVC : UIViewController {
     func resetButtonPressed(control: UISegmentedControl) {
         self.resetButton.selectedSegmentIndex = UISegmentedControlNoSegment
 
-        let message = "This will reset the \(scores.numberOfStatesSeen()) states you have collected.  Are you sure you want to erase everything and start over?"
-        let alert = UIAlertController(title:"Reset All States", message:message, preferredStyle:.Alert)
-        
-        let cancelAction = UIAlertAction(title:"Cancel", style:.Cancel, handler:nil)
-        let resetAction  = UIAlertAction(title:"Reset Everything", style:.Destructive,
-            handler: {(action: UIAlertAction!) in
-                self.scores.resetAll()
-                self.dismissViewControllerAnimated(true, completion:nil)
-            })
-        
-        alert.addAction(cancelAction)
-        alert.addAction(resetAction)
-        
-        self.presentViewController(alert, animated: true, completion: nil)
+//        let message = "This will reset the \(scores.numberOfStatesSeen()) states you have collected.  Are you sure you want to erase everything and start over?"
+//        let alert = UIAlertController(title:"Reset All States", message:message, preferredStyle:.Alert)
+//        
+//        let cancelAction = UIAlertAction(title:"Cancel", style:.Cancel, handler:nil)
+//        let resetAction  = UIAlertAction(title:"Reset Everything", style:.Destructive,
+//            handler: {(action: UIAlertAction!) in
+//                self.scores.resetAll()
+//                self.dismissViewControllerAnimated(true, completion:nil)
+//            })
+//        
+//        alert.addAction(cancelAction)
+//        alert.addAction(resetAction)
+//        
+//        self.presentViewController(alert, animated: true, completion: nil)
     }
     
 }

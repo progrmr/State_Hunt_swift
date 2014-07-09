@@ -100,11 +100,11 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         let backdrop = UIView()
         backdrop.backgroundColor = UIColor(white: 1, alpha: 0.5)
         
-        // add blur visual effect to the backdrop
-        var visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Light))
-        visualEffectView.frame = backdrop.bounds
-        visualEffectView.autoresizingMask = .FlexibleWidth | .FlexibleHeight
-        backdrop.addSubview(visualEffectView)
+//        // add blur visual effect to the backdrop
+//        var visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Light))
+//        visualEffectView.frame = backdrop.bounds
+//        visualEffectView.autoresizingMask = .FlexibleWidth | .FlexibleHeight
+//        backdrop.addSubview(visualEffectView)
         
         // add the list of states collection view
         let layout = UICollectionViewFlowLayout()
@@ -203,14 +203,10 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         }
         
         if let message = oMessage {
-            let alert = UIAlertController(title:"\(numSeen) States", message:message, preferredStyle:.Alert)
+            let cancelAction = GMAlertAction(title: "Yes!")
             
-            alert.addAction(UIAlertAction(title:"OK", style:.Default,
-                handler: {(action: UIAlertAction!) in
-                    /* do nothing */
-                }))
-            
-            self.presentViewController(alert, animated: true, completion: nil)
+            let alert = GMAlertView(title: "\(numSeen) States", message: message, cancelAction: cancelAction, otherAction: nil);
+            alert.show();
         }
     }
     
@@ -234,23 +230,23 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
             let stateName = scores.stateNameForIndex(stateIndex)
             let message   = "You've saw \(stateName) on \(dateStr), do you really want to undo this?"
             
-            let alert = UIAlertController(title:"Remove \(stateName)?", message:message, preferredStyle:.Alert)
-            
-            let cancelAction = UIAlertAction(title:"No", style:.Cancel,
-                handler: {(action: UIAlertAction!) in
-                    println("title: \(action.title)")
-                })
-            
-            let yesAction = UIAlertAction(title:"Yes", style:.Default,
-                handler: {(action: UIAlertAction!) in
-                    self.setState(stateIndex, seen:false)
-                    self.clickSound.play()
-                })
-            
-            alert.addAction(cancelAction)
-            alert.addAction(yesAction)
-            
-            self.presentViewController(alert, animated: true, completion: nil)
+//            let alert = UIAlertController(title:"Remove \(stateName)?", message:message, preferredStyle:.Alert)
+//            
+//            let cancelAction = UIAlertAction(title:"No", style:.Cancel,
+//                handler: {(action: UIAlertAction!) in
+//                    println("title: \(action.title)")
+//                })
+//            
+//            let yesAction = UIAlertAction(title:"Yes", style:.Default,
+//                handler: {(action: UIAlertAction!) in
+//                    self.setState(stateIndex, seen:false)
+//                    self.clickSound.play()
+//                })
+//            
+//            alert.addAction(cancelAction)
+//            alert.addAction(yesAction)
+//            
+//            self.presentViewController(alert, animated: true, completion: nil)
         }
     }
     
@@ -347,13 +343,13 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
             cell.contentView.backgroundColor    = theme.kSeenBackgroundColor
             cell.titleLabel.backgroundColor     = theme.kSeenBackgroundColor
             cell.titleLabel.textColor           = theme.kSeenTextColor
+            cell.detailLabel.backgroundColor    = theme.kSeenBackgroundColor
             
             if (showDetails) {
                 let dateSeen = scores.dateSeen(row)
                 cell.titleLabel.text            = scores.stateNameForIndex(row)
                 cell.detailLabel.text           = dateFormatter.stringFromDate(dateSeen)
-                cell.detailLabel.backgroundColor = theme.kSeenBackgroundColor
-                cell.detailLabel.textColor       = theme.kSeenTextColor
+                cell.detailLabel.textColor      = theme.kSeenTextColor
                 
             } else {
                 cell.titleLabel.text            = scores.stateCodeForIndex(row)
