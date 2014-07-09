@@ -347,13 +347,13 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
             cell.contentView.backgroundColor    = theme.kSeenBackgroundColor
             cell.titleLabel.backgroundColor     = theme.kSeenBackgroundColor
             cell.titleLabel.textColor           = theme.kSeenTextColor
+            cell.detailLabel.backgroundColor    = theme.kSeenBackgroundColor
             
             if (showDetails) {
                 let dateSeen = scores.dateSeen(row)
                 cell.titleLabel.text            = scores.stateNameForIndex(row)
                 cell.detailLabel.text           = dateFormatter.stringFromDate(dateSeen)
-                cell.detailLabel.backgroundColor = theme.kSeenBackgroundColor
-                cell.detailLabel.textColor       = theme.kSeenTextColor
+                cell.detailLabel.textColor      = theme.kSeenTextColor
                 
             } else {
                 cell.titleLabel.text            = scores.stateCodeForIndex(row)
@@ -366,7 +366,7 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         
         return cell;
     }
-    
+
     func collectionView(collectionView: UICollectionView!, viewForSupplementaryElementOfKind kind: String!, atIndexPath indexPath: NSIndexPath!) -> UICollectionReusableView!
     {
         let theme = Theme.currentTheme
