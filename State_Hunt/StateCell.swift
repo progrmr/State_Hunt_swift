@@ -50,6 +50,10 @@ class StateCell: UICollectionViewCell {
         nslcs += "H:|-2-[detail]-2-|"
         nslcs += "V:|[title][detail]-3-|"
         
+        // set the hugging priority for the detailLabel higher than the titleLabel,
+        // so it shrinks to 0 height when it contains no text
+        detailLabel.setContentHuggingPriority(251, forAxis: .Vertical)
+        
         // add border
         self.layer.borderColor  = theme.kCellBorderColor.CGColor
         self.layer.borderWidth  = 1.0 / UIScreen.mainScreen().scale
