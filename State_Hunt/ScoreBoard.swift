@@ -103,13 +103,14 @@ class ScoreBoard {
         let sr102100 = AGSSpatialReference(WKID: 102100)
         
         for (stateCode, geometryJSON) in geoData {
-            println("\(stateCode) with \(geometryJSON.count)")
-            
             let json = geometryJSON as [NSObject:AnyObject]
-            let geo  = AGSGeometry(JSON: json, spatialReference: sr102100) as AGSGeometry
+            let geo  = AGSPolygon(JSON: json, spatialReference: sr102100) as AGSPolygon
             let code = stateCode as StateCode
+
             let graphic = AGSGraphic(geometry: geo, symbol: nil, attributes: nil)
             tmpGeoDict[code] = graphic
+            
+            
         }
         
         stateGraphics = tmpGeoDict

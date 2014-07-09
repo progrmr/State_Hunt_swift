@@ -254,10 +254,8 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         // get geometries for all seen states and highlight them on the map
         for (stateCode, dateSeen) in scores.dateSeenForCode {
             if let date = scores.dateSeenForCode[stateCode] {
-                if let graphic = scores.stateGraphics[stateCode] {
-                    // highlight it on the map
-                    highlightStateGeometry(graphic, zoom: false)
-                }
+                // highlight it on the map
+                highlightStateGeometry(stateCode, zoom: false)
             }
         }
     }
@@ -383,9 +381,10 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
             // hasn't been seen before, set it to "seen"
             scores.markStateSeen(index)
             
-            // fetch geometry for the state (if necessary)
             let stateCode = scores.stateCodeForIndex(index)
-//            self.fetchStateGeometry(stateCode, zoom:true)
+            
+            // highlight it on the map
+            highlightStateGeometry(stateCode, zoom: true)
             
         } else {
             // Mark a "seen" state back to "unseen"
@@ -403,12 +402,14 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         headerView!.setScore(scores.numberOfStatesSeen())
     }
     
-    func highlightStateGeometry(graphic: AGSGraphic, zoom: Bool) {
-        graphic.symbol  = AGSSimpleFillSymbol(color: UIColor(rgba:0x77ff7740), outlineColor: UIColor(rgb:0x005500))
-        graphicsLayer.addGraphic(graphic)
-        
-        if zoom {
-            self.zoomToGeometry(graphic.geometry)
+    func highlightStateGeometry(stateCode: ScoreBoard.StateCode, zoom: Bool) {
+        if let graphic = scores.stateGraphics[stateCode] {
+            graphic.symbol  = AGSSimpleFillSymbol(color: UIColor(rgba:0x77ff7740), outlineColor: UIColor(rgb:0x005500))
+            graphicsLayer.addGraphic(graphic)
+            
+            if zoom {
+                self.zoomToGeometry(graphic.geometry)
+            }
         }
     }
     
