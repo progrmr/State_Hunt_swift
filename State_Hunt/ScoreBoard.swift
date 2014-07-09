@@ -89,7 +89,6 @@ class ScoreBoard {
     // Dictionary keyed by state code containing the AGSGraphic for each state
     let stateGraphics    : Dictionary<StateCode,AGSGraphic> = {
         // read the geometry data from the file in the bundle
-        let statesFileSR    = AGSSpatialReference(WKID: 102100)     // SR of data in file
         let statesFilePath  = NSBundle.mainBundle().bundlePath.stringByAppendingPathComponent("state_polygons.plist")
         let statePolygons   = NSMutableDictionary(contentsOfFile: statesFilePath)
         var result          = Dictionary<StateCode,AGSGraphic>(minimumCapacity: statePolygons.count)
@@ -97,7 +96,7 @@ class ScoreBoard {
         for (stateCode, polygonJSON) in statePolygons {
             if let code = stateCode as? StateCode {
                 if let json = polygonJSON as? [NSObject:AnyObject] {
-                    let polygon  = AGSPolygon(JSON: json, spatialReference: statesFileSR)
+                    let polygon = AGSPolygon.polygonWithJSON(json) as AGSGeometry
                     result[code] = AGSGraphic(geometry: polygon, symbol: nil, attributes: nil)
                 }
             }
