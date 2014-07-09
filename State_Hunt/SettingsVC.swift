@@ -51,7 +51,7 @@ class SettingsVC : UIViewController {
         howToLabel.backgroundColor  = theme.kBackgroundColor
         howToLabel.textAlignment    = .Center
         howToLabel.font             = UIFont.systemFontOfSize(15)
-        howToLabel.numberOfLines    = 3
+        howToLabel.numberOfLines    = 4
         howToLabel.text             = "Try to spot license plates from each state and you this app to keep track of which ones you have seen."
         
         // add the done button
@@ -75,7 +75,7 @@ class SettingsVC : UIViewController {
         nslcs += "H:[done(>=50)]-|"
         nslcs += "H:|[title]|"
         nslcs += "H:|[scoreLabel]|"
-        nslcs += "H:|-(>=5)-[howToLabel(<=220)]-(>=5)-|"
+        nslcs += "H:|-(>=5)-[howToLabel(<=260@800)]-(>=5)-|"
         nslcs += "V:|-[done(>=35)][title]-20-[scoreLabel]-20-[howToLabel]-(>=10)-[resetButton]-(>=5,30@900)-|"
         
         nslcs += NSLC.EQ(howToLabel, attr1:.CenterX, item2:view, attr2:.CenterX)

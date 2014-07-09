@@ -29,7 +29,7 @@
 		8E5D133D1962E8C9001C6392 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E5D133C1962E8C9001C6392 /* Images.xcassets */; };
 		8E5D13491962E8C9001C6392 /* State_HuntTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E5D13481962E8C9001C6392 /* State_HuntTests.swift */; };
 		8E5D13531962F633001C6392 /* NSLC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E5D13521962F633001C6392 /* NSLC.swift */; };
-		8E68F7C1196D08860029C16C /* states_geometry.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8E68F7C0196D08860029C16C /* states_geometry.plist */; };
+		8E68F7C1196D08860029C16C /* state_polygons.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8E68F7C0196D08860029C16C /* state_polygons.plist */; };
 		8E78114519673869003BB7FC /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E78114419673869003BB7FC /* Theme.swift */; };
 		8E78114719675619003BB7FC /* SoundFX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E78114619675619003BB7FC /* SoundFX.swift */; };
 		8EA9B56D196722D200E63D3A /* UIColor+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EA9B56C196722D200E63D3A /* UIColor+Additions.swift */; };
@@ -75,7 +75,7 @@
 		8E5D13471962E8C9001C6392 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8E5D13481962E8C9001C6392 /* State_HuntTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = State_HuntTests.swift; sourceTree = "<group>"; };
 		8E5D13521962F633001C6392 /* NSLC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSLC.swift; sourceTree = "<group>"; };
-		8E68F7C0196D08860029C16C /* states_geometry.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = states_geometry.plist; sourceTree = "<group>"; };
+		8E68F7C0196D08860029C16C /* state_polygons.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = state_polygons.plist; sourceTree = "<group>"; };
 		8E78114419673869003BB7FC /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		8E78114619675619003BB7FC /* SoundFX.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundFX.swift; sourceTree = "<group>"; };
 		8EA9B56C196722D200E63D3A /* UIColor+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Additions.swift"; sourceTree = "<group>"; };
@@ -102,7 +102,7 @@
 		2C352D661967722B0011866A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				8E68F7C0196D08860029C16C /* states_geometry.plist */,
+				8E68F7C0196D08860029C16C /* state_polygons.plist */,
 				2C352D67196772670011866A /* applause.mp3 */,
 				2C352D68196772670011866A /* cheer_8k.wav */,
 				2C352D69196772670011866A /* click.wav */,
@@ -272,7 +272,7 @@
 			files = (
 				2CE429E719637ECE00FFE04E /* ArcGIS.bundle in Resources */,
 				2C352D6E196772670011866A /* cheer_8k.wav in Resources */,
-				8E68F7C1196D08860029C16C /* states_geometry.plist in Resources */,
+				8E68F7C1196D08860029C16C /* state_polygons.plist in Resources */,
 				8E2F571C196ABC7E00B9DDE5 /* Settings.bundle in Resources */,
 				2C352D6D196772670011866A /* applause.mp3 in Resources */,
 				2C352D72196772670011866A /* ooh.mp3 in Resources */,

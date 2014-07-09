@@ -10,6 +10,7 @@ import Foundation
 import ArcGIS
 
 let kDefaultsDateSeenKey = "kDefaultsDateSeenKey"
+let kStateCount          = 50
 
 // -----------------------------------------------
 // where "UPPER(STATE_NAME) = 'NORTH DAKOTA'"
@@ -83,43 +84,35 @@ class ScoreBoard {
     let stateCodes       : Array<StateCode>
     
     // Dictionary keyed by state code containing the NSDate when it was seen
-    var dateSeenForCode  : DateDictionary
+    var dateSeenForCode  = DateDictionary(minimumCapacity: kStateCount)
     
     // Dictionary keyed by state code containing the AGSGraphic for each state
-    let stateGraphics  : Dictionary<StateCode,AGSGraphic>
+    let stateGraphics    : Dictionary<StateCode,AGSGraphic> = {
+        // read the geometry data from the file in the bundle
+        let statesFileSR    = AGSSpatialReference(WKID: 102100)     // SR of data in file
+        let statesFilePath  = NSBundle.mainBundle().bundlePath.stringByAppendingPathComponent("state_polygons.plist")
+        let statePolygons   = NSMutableDictionary(contentsOfFile: statesFilePath)
+        var result          = Dictionary<StateCode,AGSGraphic>(minimumCapacity: statePolygons.count)
+        
+        for (stateCode, polygonJSON) in statePolygons {
+            if let code = stateCode as? StateCode {
+                if let json = polygonJSON as? [NSObject:AnyObject] {
+                    let polygon  = AGSPolygon(JSON: json, spatialReference: statesFileSR)
+                    result[code] = AGSGraphic(geometry: polygon, symbol: nil, attributes: nil)
+                }
+            }
+        }
+        return result
+    }()
     
     //------------------------------------------
     // initializers
     //------------------------------------------
     init() {
         stateCodes = stateNameForCode.keysSortedByValue(<)
-        dateSeenForCode = DateDictionary()
         
-        // read the states_geometry.plist file from the bundle
-        let bundlePath = NSBundle.mainBundle().bundlePath
-        let statesFilePath = bundlePath.stringByAppendingPathComponent("states_geometry.plist")
-        let geoData = NSMutableDictionary(contentsOfFile: statesFilePath)
-        var tmpGeoDict = Dictionary<StateCode,AGSGraphic>()
-        let sr102100 = AGSSpatialReference(WKID: 102100)
-        
-        for (stateCode, geometryJSON) in geoData {
-            let json = geometryJSON as [NSObject:AnyObject]
-            let geo  = AGSPolygon(JSON: json, spatialReference: sr102100) as AGSPolygon
-            let code = stateCode as StateCode
-
-            let graphic = AGSGraphic(geometry: geo, symbol: nil, attributes: nil)
-            tmpGeoDict[code] = graphic
-            
-            
-        }
-        
-        stateGraphics = tmpGeoDict
-        
-        
-        // Previous version of the app used StateSaver to save dates states
-        // were seen.  Try to read that file now.
+        // check to see if we have previously saved any state data
         if saver.count() > 0 {
-            // look for the 50 states in the saved state data
             for stateCode in stateCodes {
                 let object : AnyObject? = saver.objectForKey(stateCode)
                 
@@ -188,7 +181,7 @@ class ScoreBoard {
     func unmarkStateSeen(index: StateIndex) {
         let stateCode = stateCodeForIndex(index)
        
-        if let date : NSDate = dateSeenForCode.removeValueForKey(stateCode) {
+        if let date = dateSeenForCode.removeValueForKey(stateCode) {
             // remove date seen from the saved state data
             saver.setObject(nil, forKey:stateCode)
             saver.synchronize()
