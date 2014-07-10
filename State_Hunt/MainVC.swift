@@ -24,9 +24,9 @@ let kMapScaleMinimum    = 300_000_000.0
 let kMapScaleMaximum    =   2_800_000.0
 
 let kNormalFillRGBA     : UInt32 = 0x77ff7740
+let kSelectedFillRGBA   : UInt32 = 0x77ff7780
 let kNormalBorderRGBA   : UInt32 = 0x006600ff
-let kSelectedFillRGBA   : UInt32 = 0xaaffaa80
-let kSelectedBorderRGBA : UInt32 = 0x00ee00ff
+let kSelectedBorderRGBA : UInt32 = 0x009900ff
 
 class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, AGSQueryTaskDelegate {
     
@@ -208,7 +208,7 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         let dateSeen  = scores.dateSeen(stateIndex)
         let timeSinceSeen = NSDate() - dateSeen!
         
-        if (timeSinceSeen < 300) {
+        if (timeSinceSeen < 30) {
             // they just saw this within the past few minutes, go ahead an unmark it without asking
             self.setState(stateIndex, seen:false)
             self.clickSound.play()
@@ -224,6 +224,16 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
             let stateName = scores.stateNameForIndex(stateIndex)
             let message   = "You've saw \(stateName) on \(dateStr), do you really want to undo this?"
             
+            let cancelAction = GMAlertAction(title: "No")
+            let removeAction = GMAlertAction(title: "Remove")
+            removeAction.buttonPressed = {
+                self.setState(stateIndex, seen:false)
+                self.clickSound.play()
+            }
+            
+            let alert = GMAlertView(title: "Remove \(stateName)?", message: message, cancelAction: cancelAction, otherAction: removeAction);
+            alert.show();
+
 //            let alert = UIAlertController(title:"Remove \(stateName)?", message:message, preferredStyle:.Alert)
 //            
 //            let cancelAction = UIAlertAction(title:"No", style:.Cancel,
@@ -420,7 +430,7 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
                 self.zoomToGeometry(graphic.geometry)
 
                 // after a few seconds, change the color to normal
-                let delay = 2 * Double(NSEC_PER_SEC)
+                let delay = 3 * Double(NSEC_PER_SEC)
                 let time  = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
                 
                 dispatch_after(time, dispatch_get_main_queue()) {
@@ -456,7 +466,9 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
                 // state has been seen, set it's colors
                 let fillRGBA    = normal ? kNormalFillRGBA   : kSelectedFillRGBA
                 let outlineRGBA = normal ? kNormalBorderRGBA : kSelectedBorderRGBA
-                graphic.symbol = AGSSimpleFillSymbol(color: UIColor(rgba:fillRGBA), outlineColor: UIColor(rgba:outlineRGBA))
+                let fillSymbol  = AGSSimpleFillSymbol(color: UIColor(rgba:fillRGBA), outlineColor: UIColor(rgba:outlineRGBA))
+                fillSymbol.outline.width = normal ? 1 : 2
+                graphic.symbol  = fillSymbol
                 graphicsLayer.addGraphic(graphic)
             }
         }

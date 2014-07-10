@@ -21,12 +21,18 @@
 		2CC69D081965F1D3005C415B /* NSDate+Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC69D071965F1D3005C415B /* NSDate+Operators.swift */; };
 		2CE429E719637ECE00FFE04E /* ArcGIS.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2CE429E619637ECE00FFE04E /* ArcGIS.bundle */; };
 		8E2F571C196ABC7E00B9DDE5 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8E2F571B196ABC7E00B9DDE5 /* Settings.bundle */; };
+		8E3C71B2196E40F7003BE90C /* LicensePlates58x58.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E3C71AF196E40F7003BE90C /* LicensePlates58x58.png */; };
+		8E3C71B3196E40F7003BE90C /* LicensePlates80x80.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E3C71B0196E40F7003BE90C /* LicensePlates80x80.png */; };
+		8E3C71B4196E40F7003BE90C /* LicensePlates120x120.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E3C71B1196E40F7003BE90C /* LicensePlates120x120.png */; };
+		8E3C71B9196E4794003BE90C /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E3C71B5196E4794003BE90C /* Default-568h@2x.png */; };
+		8E3C71BA196E4794003BE90C /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E3C71B6196E4794003BE90C /* Icon-72.png */; };
+		8E3C71BB196E4794003BE90C /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E3C71B7196E4794003BE90C /* Icon.png */; };
+		8E3C71BC196E4794003BE90C /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E3C71B8196E4794003BE90C /* Icon@2x.png */; };
 		8E4203C21964FF0C00FAE9C6 /* StateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4203C11964FF0C00FAE9C6 /* StateCell.swift */; };
 		8E4203C619650FA600FAE9C6 /* ScoreBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4203C519650FA600FAE9C6 /* ScoreBoard.swift */; };
 		8E4203C8196519D600FAE9C6 /* NSDictionary+Sort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4203C7196519D600FAE9C6 /* NSDictionary+Sort.swift */; };
 		8E5D13361962E8C9001C6392 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E5D13351962E8C9001C6392 /* AppDelegate.swift */; };
 		8E5D13381962E8C9001C6392 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E5D13371962E8C9001C6392 /* MainVC.swift */; };
-		8E5D133D1962E8C9001C6392 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E5D133C1962E8C9001C6392 /* Images.xcassets */; };
 		8E5D13491962E8C9001C6392 /* State_HuntTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E5D13481962E8C9001C6392 /* State_HuntTests.swift */; };
 		8E5D13531962F633001C6392 /* NSLC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E5D13521962F633001C6392 /* NSLC.swift */; };
 		8E68F7C1196D08860029C16C /* state_polygons.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8E68F7C0196D08860029C16C /* state_polygons.plist */; };
@@ -70,6 +76,13 @@
 		2CE429E619637ECE00FFE04E /* ArcGIS.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = ArcGIS.bundle; path = ArcGIS.framework/Versions/Current/Resources/ArcGIS.bundle; sourceTree = ArcGISRT; };
 		8E2B3B82196ACEA700F27C95 /* State_Hunt-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "State_Hunt-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
 		8E2F571B196ABC7E00B9DDE5 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = SOURCE_ROOT; };
+		8E3C71AF196E40F7003BE90C /* LicensePlates58x58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LicensePlates58x58.png; sourceTree = "<group>"; };
+		8E3C71B0196E40F7003BE90C /* LicensePlates80x80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LicensePlates80x80.png; sourceTree = "<group>"; };
+		8E3C71B1196E40F7003BE90C /* LicensePlates120x120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LicensePlates120x120.png; sourceTree = "<group>"; };
+		8E3C71B5196E4794003BE90C /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		8E3C71B6196E4794003BE90C /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
+		8E3C71B7196E4794003BE90C /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		8E3C71B8196E4794003BE90C /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		8E4203C11964FF0C00FAE9C6 /* StateCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateCell.swift; sourceTree = "<group>"; };
 		8E4203C31965077A00FAE9C6 /* state_data.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = state_data.csv; sourceTree = "<group>"; };
 		8E4203C519650FA600FAE9C6 /* ScoreBoard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoreBoard.swift; sourceTree = "<group>"; };
@@ -119,6 +132,10 @@
 		2C352D661967722B0011866A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8E3C71B5196E4794003BE90C /* Default-568h@2x.png */,
+				8E3C71B6196E4794003BE90C /* Icon-72.png */,
+				8E3C71B7196E4794003BE90C /* Icon.png */,
+				8E3C71B8196E4794003BE90C /* Icon@2x.png */,
 				8ED5604A196CED7800968B17 /* 1099-list.png */,
 				8ED5604B196CED7800968B17 /* 1099-list@2x.png */,
 				8ED5604E196CEDC700968B17 /* 724-info.png */,
@@ -133,6 +150,9 @@
 				2C352D6A196772670011866A /* close_door2.wav */,
 				2C352D6B196772670011866A /* crowd_homerun_applause.wav */,
 				2C352D6C196772670011866A /* ooh.mp3 */,
+				8E3C71AF196E40F7003BE90C /* LicensePlates58x58.png */,
+				8E3C71B0196E40F7003BE90C /* LicensePlates80x80.png */,
+				8E3C71B1196E40F7003BE90C /* LicensePlates120x120.png */,
 				2CE429E619637ECE00FFE04E /* ArcGIS.bundle */,
 				8E5D133C1962E8C9001C6392 /* Images.xcassets */,
 				8E4203C31965077A00FAE9C6 /* state_data.csv */,
@@ -297,22 +317,28 @@
 			buildActionMask = 2147483647;
 			files = (
 				2CE429E719637ECE00FFE04E /* ArcGIS.bundle in Resources */,
+				8E3C71B4196E40F7003BE90C /* LicensePlates120x120.png in Resources */,
 				8ED56055196CEDC700968B17 /* 727-more.png in Resources */,
 				2C352D6E196772670011866A /* cheer_8k.wav in Resources */,
 				8ED5604D196CED7800968B17 /* 1099-list@2x.png in Resources */,
+				8E3C71BC196E4794003BE90C /* Icon@2x.png in Resources */,
+				8E3C71BA196E4794003BE90C /* Icon-72.png in Resources */,
 				8E68F7C1196D08860029C16C /* state_polygons.plist in Resources */,
+				8E3C71B3196E40F7003BE90C /* LicensePlates80x80.png in Resources */,
+				8E3C71BB196E4794003BE90C /* Icon.png in Resources */,
 				8E2F571C196ABC7E00B9DDE5 /* Settings.bundle in Resources */,
 				8ED56054196CEDC700968B17 /* 724-info@2x.png in Resources */,
 				8ED56057196CEDC700968B17 /* trophy.png in Resources */,
 				2C352D6D196772670011866A /* applause.mp3 in Resources */,
 				8ED56056196CEDC700968B17 /* 727-more@2x.png in Resources */,
 				8ED56053196CEDC700968B17 /* 724-info.png in Resources */,
+				8E3C71B9196E4794003BE90C /* Default-568h@2x.png in Resources */,
 				2C352D72196772670011866A /* ooh.mp3 in Resources */,
 				2C352D6F196772670011866A /* click.wav in Resources */,
 				8ED5604C196CED7800968B17 /* 1099-list.png in Resources */,
 				2C352D71196772670011866A /* crowd_homerun_applause.wav in Resources */,
 				2C352D70196772670011866A /* close_door2.wav in Resources */,
-				8E5D133D1962E8C9001C6392 /* Images.xcassets in Resources */,
+				8E3C71B2196E40F7003BE90C /* LicensePlates58x58.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -479,9 +505,7 @@
 		8E5D134D1962E8C9001C6392 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Gary Morris (JYBQBR728U)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Gary Morris (ES7BUGK27G)";
 				FRAMEWORK_SEARCH_PATHS = "$(HOME)/Library/SDKs/ArcGIS/iOS/";
 				INFOPLIST_FILE = State_Hunt/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -502,9 +526,7 @@
 		8E5D134E1962E8C9001C6392 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Gary Morris (JYBQBR728U)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Gary Morris (ES7BUGK27G)";
 				FRAMEWORK_SEARCH_PATHS = "$(HOME)/Library/SDKs/ArcGIS/iOS/";
 				INFOPLIST_FILE = State_Hunt/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
