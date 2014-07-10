@@ -29,6 +29,7 @@
 		8E5D133D1962E8C9001C6392 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E5D133C1962E8C9001C6392 /* Images.xcassets */; };
 		8E5D13491962E8C9001C6392 /* State_HuntTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E5D13481962E8C9001C6392 /* State_HuntTests.swift */; };
 		8E5D13531962F633001C6392 /* NSLC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E5D13521962F633001C6392 /* NSLC.swift */; };
+		8E68F7C1196D08860029C16C /* state_polygons.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8E68F7C0196D08860029C16C /* state_polygons.plist */; };
 		8E78114519673869003BB7FC /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E78114419673869003BB7FC /* Theme.swift */; };
 		8E78114719675619003BB7FC /* SoundFX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E78114619675619003BB7FC /* SoundFX.swift */; };
 		8EA9B56D196722D200E63D3A /* UIColor+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EA9B56C196722D200E63D3A /* UIColor+Additions.swift */; };
@@ -82,6 +83,7 @@
 		8E5D13471962E8C9001C6392 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8E5D13481962E8C9001C6392 /* State_HuntTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = State_HuntTests.swift; sourceTree = "<group>"; };
 		8E5D13521962F633001C6392 /* NSLC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSLC.swift; sourceTree = "<group>"; };
+		8E68F7C0196D08860029C16C /* state_polygons.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = state_polygons.plist; sourceTree = "<group>"; };
 		8E78114419673869003BB7FC /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		8E78114619675619003BB7FC /* SoundFX.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundFX.swift; sourceTree = "<group>"; };
 		8EA9B56C196722D200E63D3A /* UIColor+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Additions.swift"; sourceTree = "<group>"; };
@@ -124,6 +126,7 @@
 				8ED56050196CEDC700968B17 /* 727-more.png */,
 				8ED56051196CEDC700968B17 /* 727-more@2x.png */,
 				8ED56052196CEDC700968B17 /* trophy.png */,
+				8E68F7C0196D08860029C16C /* state_polygons.plist */,
 				2C352D67196772670011866A /* applause.mp3 */,
 				2C352D68196772670011866A /* cheer_8k.wav */,
 				2C352D69196772670011866A /* click.wav */,
@@ -297,6 +300,7 @@
 				8ED56055196CEDC700968B17 /* 727-more.png in Resources */,
 				2C352D6E196772670011866A /* cheer_8k.wav in Resources */,
 				8ED5604D196CED7800968B17 /* 1099-list@2x.png in Resources */,
+				8E68F7C1196D08860029C16C /* state_polygons.plist in Resources */,
 				8E2F571C196ABC7E00B9DDE5 /* Settings.bundle in Resources */,
 				8ED56054196CEDC700968B17 /* 724-info@2x.png in Resources */,
 				8ED56057196CEDC700968B17 /* trophy.png in Resources */,
@@ -477,8 +481,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Gary Morris (JYBQBR728U)";
 				FRAMEWORK_SEARCH_PATHS = "$(HOME)/Library/SDKs/ArcGIS/iOS/";
 				INFOPLIST_FILE = State_Hunt/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -501,8 +504,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Gary Morris (JYBQBR728U)";
 				FRAMEWORK_SEARCH_PATHS = "$(HOME)/Library/SDKs/ArcGIS/iOS/";
 				INFOPLIST_FILE = State_Hunt/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;

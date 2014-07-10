@@ -29,7 +29,8 @@ class HeaderView : UICollectionReusableView {
         infoButton.contentEdgeInsets        = UIEdgeInsetsMake(0, 10, 0, 10)
         let infoImage = UIImage(named: "724-info")
         infoButton.setImage(infoImage.imageWithRenderingMode(.AlwaysTemplate), forState:.Normal)
-
+        infoButton.accessibilityLabel       = "About"
+        
         summaryLabel.textAlignment          = .Center
         summaryLabel.textColor              = theme.kTextColor
         summaryLabel.backgroundColor        = theme.kBackgroundColor
@@ -41,6 +42,8 @@ class HeaderView : UICollectionReusableView {
         let lessImage = UIImage(named: "727-more")
         showAllButton.setImage(moreImage.imageWithRenderingMode(.AlwaysTemplate), forState:.Normal)
         showAllButton.setImage(lessImage.imageWithRenderingMode(.AlwaysTemplate), forState:.Selected)
+        showAllButton.accessibilityLabel    = "Show more detail"
+        showAllButton.accessibilityTraits   |= UIAccessibilityTraitUpdatesFrequently
         
         // add auto layout constraints
         var nslcs = NSLC(parent:self)
@@ -56,6 +59,9 @@ class HeaderView : UICollectionReusableView {
 
     func setScore(score: Int) {
         summaryLabel.text = (score == 1) ? "1 State" : "\(score) States"
+        summaryLabel.accessibilityLabel = (score == 0) ? "No states yet" : "\(summaryLabel.text) seen"
+        summaryLabel.accessibilityTraits |= UIAccessibilityTraitUpdatesFrequently
+        
         showAllButton.hidden = score < 1
     }
     

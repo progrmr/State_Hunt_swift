@@ -10,6 +10,7 @@ import Foundation
 import ArcGIS
 
 let kDefaultsDateSeenKey = "kDefaultsDateSeenKey"
+let kStateCount          = 50
 
 // -----------------------------------------------
 // where "UPPER(STATE_NAME) = 'NORTH DAKOTA'"
@@ -83,19 +84,34 @@ class ScoreBoard {
     let stateCodes       : Array<StateCode>
     
     // Dictionary keyed by state code containing the NSDate when it was seen
-    var dateSeenForCode  : DateDictionary
+    var dateSeenForCode  = DateDictionary(minimumCapacity: kStateCount)
+    
+    // Dictionary keyed by state code containing the AGSGraphic for each state
+    let stateGraphics    : Dictionary<StateCode,AGSGraphic> = {
+        // read the geometry data from the file in the bundle
+        let statesFilePath  = NSBundle.mainBundle().bundlePath.stringByAppendingPathComponent("state_polygons.plist")
+        let statePolygons   = NSMutableDictionary(contentsOfFile: statesFilePath)
+        var result          = Dictionary<StateCode,AGSGraphic>(minimumCapacity: statePolygons.count)
+        
+        for (stateCode, polygonJSON) in statePolygons {
+            if let code = stateCode as? StateCode {
+                if let json = polygonJSON as? [NSObject:AnyObject] {
+                    let polygon = AGSPolygon.polygonWithJSON(json) as AGSGeometry
+                    result[code] = AGSGraphic(geometry: polygon, symbol: nil, attributes: nil)
+                }
+            }
+        }
+        return result
+    }()
     
     //------------------------------------------
     // initializers
     //------------------------------------------
     init() {
         stateCodes = stateNameForCode.keysSortedByValue(<)
-        dateSeenForCode = DateDictionary()
         
-        // Previous version of the app used StateSaver to save dates states
-        // were seen.  Try to read that file now.
+        // check to see if we have previously saved any state data
         if saver.count() > 0 {
-            // look for the 50 states in the saved state data
             for stateCode in stateCodes {
                 let object : AnyObject? = saver.objectForKey(stateCode)
                 
@@ -164,7 +180,7 @@ class ScoreBoard {
     func unmarkStateSeen(index: StateIndex) {
         let stateCode = stateCodeForIndex(index)
        
-        if let date : NSDate = dateSeenForCode.removeValueForKey(stateCode) {
+        if let date = dateSeenForCode.removeValueForKey(stateCode) {
             // remove date seen from the saved state data
             saver.setObject(nil, forKey:stateCode)
             saver.synchronize()
