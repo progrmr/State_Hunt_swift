@@ -146,7 +146,7 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         return self.statusBarHidden
     }
     
-    func markNewStateSeen(stateIndex: ScoreBoard.StateIndex) {
+    func markNewStateSeen(stateIndex: StateIndex) {
         // set the seen flag for that state row
         setState(stateIndex, seen:true)
         clickSound.play()
@@ -155,7 +155,7 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         var oMessage : String?
         
         switch numSeen {
-        case scores.numberOfStates():
+        case kStateCount:
             //--------------------------------------
             // All states seen, we have a WINNER!
             //--------------------------------------
@@ -208,8 +208,9 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         }
     }
     
-    func unmarkStateSeen(stateIndex: ScoreBoard.StateIndex) {
-        let dateSeen  = scores.dateSeen(stateIndex)
+    func unmarkStateSeen(stateIndex: StateIndex) {
+        let stateCode = stateCodes[stateIndex]
+        let dateSeen  = scores.dateSeen(stateCode)
         let timeSinceSeen = NSDate() - dateSeen!
         
         if (timeSinceSeen < 300) {
@@ -225,7 +226,7 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
             dateFmtr.timeStyle = .ShortStyle
             
             let dateStr   = dateFmtr.stringFromDate(dateSeen)
-            let stateName = scores.stateNameForIndex(stateIndex)
+            let stateName = stateNameForCode[stateCode]
             let message   = "You've saw \(stateName) on \(dateStr), do you really want to undo this?"
             
             let alert = UIAlertController(title:"Remove \(stateName)?", message:message, preferredStyle:.Alert)
@@ -276,8 +277,8 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         
         var indexPaths = Array<NSIndexPath>()
         
-        for row in 0 ..< scores.stateCodes.count {
-            let code = scores.stateCodes[row]
+        for row in 0 ..< stateCodes.count {
+            let code = stateCodes[row]
             if let date = scores.dateSeenForCode[code] {
                 let indexPath = NSIndexPath(forRow:row, inSection:0)
                 indexPaths += indexPath
@@ -303,8 +304,9 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
     // UICollectionViewDelegateFlowLayout methods
     //------------------------------------------
     func collectionView(collectionView: UICollectionView!, layout:UICollectionViewLayout!, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        let row         = indexPath.row;
-        let notSeenYet  = !scores.wasSeen(row)
+        let row         = indexPath.row
+        let stateCode   = stateCodes[row]
+        let notSeenYet  = !scores.wasSeen(stateCode)
         
         if (notSeenYet || showDetails) {
             return CGSizeMake(103,35)
@@ -322,17 +324,16 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
     }
     
     func collectionView(collectionView: UICollectionView!, numberOfItemsInSection: Int) -> Int {
-        return scores.numberOfStates()
+        return kStateCount
     }
     
     func collectionView(collectionView: UICollectionView!, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell! {
-        let theme   = Theme.currentTheme
-        let row     = indexPath.row;
-        let seen    = scores.wasSeen(row)
-        var cell    = listView!.dequeueReusableCellWithReuseIdentifier(kStateCellReuseId, forIndexPath: indexPath) as StateCell
-        
-        let stateCode = scores.stateCodeForIndex(row)
-        let stateName = scores.stateNameForIndex(row)
+        let theme       = Theme.currentTheme
+        let row         = indexPath.row;
+        let stateCode   = stateCodes[row]
+        let stateName   = stateNameForCode[stateCode]
+        let seen        = scores.wasSeen(stateCode)
+        var cell        = listView!.dequeueReusableCellWithReuseIdentifier(kStateCellReuseId, forIndexPath: indexPath) as StateCell
         
         if (seen) {
             // State HAS been seen
@@ -342,7 +343,8 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
             cell.detailLabel.backgroundColor    = theme.kSeenBackgroundColor
             
             if (showDetails) {
-                let dateSeen = scores.dateSeen(row)
+                let dateSeen = scores.dateSeen(stateCode)
+                
                 cell.titleLabel.text            = stateName
                 cell.detailLabel.text           = dateFormatter.stringFromDate(dateSeen)
                 cell.detailLabel.textColor      = theme.kSeenTextColor
@@ -376,31 +378,32 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
     }
     
     func collectionView(collectionView: UICollectionView!, shouldSelectItemAtIndexPath indexPath: NSIndexPath!) -> Bool {
-        let row   = indexPath.row
-        let seen  = scores.wasSeen(row)
+        let row         = indexPath.row
+        let stateCode   = stateCodes[row]
+        let seen        = scores.wasSeen(stateCode)
         
         if (seen) {
-            unmarkStateSeen(row)
+            scores.unmarkStateSeen(stateCode)
         } else {
-            markNewStateSeen(row)
+            scores.markStateSeen(stateCode)
         }
         
         return false;		// never select cells
     }
     
-    func setState(index: ScoreBoard.StateIndex, seen: Bool) {
+    func setState(index: StateIndex, seen: Bool) {
+        let stateCode = stateCodes[index]
+
         if seen {
             // hasn't been seen before, set it to "seen"
-            scores.markStateSeen(index)
-            
-            let stateCode = scores.stateCodeForIndex(index)
+            scores.markStateSeen(stateCode)
             
             // highlight it on the map
             highlightStateGeometry(stateCode, zoom: true)
             
         } else {
             // Mark a "seen" state back to "unseen"
-            scores.unmarkStateSeen(index)
+            scores.unmarkStateSeen(stateCode)
             
             // unhighlight state
             self.unhighlightStateGeometry(index)
@@ -414,8 +417,8 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         headerView!.setScore(scores.numberOfStatesSeen())
     }
     
-    func highlightStateGeometry(stateCode: ScoreBoard.StateCode, zoom: Bool) {
-        if let graphic = scores.stateGraphics[stateCode] {
+    func highlightStateGeometry(stateCode: StateCode, zoom: Bool) {
+        if let graphic = stateGraphics[stateCode] {
             if zoom {
                 // init the symbol with the "selected" colors
                 updateStateColor(stateCode, seen: true, normal: false)
@@ -442,16 +445,16 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         }
     }
     
-    func unhighlightStateGeometry(index: ScoreBoard.StateIndex) {
-        let stateCode = scores.stateCodeForIndex(index)
+    func unhighlightStateGeometry(index: StateIndex) {
+        let stateCode = stateCodes[index]
         
         updateStateColor(stateCode, seen:false)
         
         self.zoomToUnitedStates()
     }
     
-    func updateStateColor(stateCode: ScoreBoard.StateCode, seen: Bool, normal: Bool = true) {
-        if let graphic = scores.stateGraphics[stateCode] {
+    func updateStateColor(stateCode: StateCode, seen: Bool, normal: Bool = true) {
+        if let graphic = stateGraphics[stateCode] {
             if graphic.layer {
                 graphic.layer.removeGraphic(graphic)
             }

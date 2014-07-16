@@ -66,7 +66,7 @@ class WinnerVC : UIViewController {
         scoreLabel.backgroundColor  = titleLabel.backgroundColor
         scoreLabel.textColor        = UIColor.whiteColor()
         let days = scores.nDaysElapsed() == 1 ? "day" : "days"
-        scoreLabel.text             = "You saw all \(scores.numberOfStates()) states in just \(scores.nDaysElapsed()) \(days)!"
+        scoreLabel.text             = "You saw all \(kStateCount) states in just \(scores.nDaysElapsed()) \(days)!"
         scoreLabel.textAlignment    = .Center
         scoreLabel.numberOfLines    = 2
         scoreLabel.font             = UIFont.systemFontOfSize(24)
