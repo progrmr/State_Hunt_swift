@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface GMAlertAction : NSObject
+
 @property (nonatomic, copy)     NSString* title;
 @property (nonatomic, copy)     void (^buttonPressed)(void);
 
