@@ -18,6 +18,7 @@
 		2C7113CE19683F0E00D9FF6F /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7113CD19683F0E00D9FF6F /* SettingsVC.swift */; };
 		2C828DE019698C50009724FB /* WinnerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C828DDF19698C50009724FB /* WinnerVC.swift */; };
 		2C828DE219699A7C009724FB /* CAAnimation+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C828DE119699A7C009724FB /* CAAnimation+Additions.swift */; };
+		2C8F880A197630030028EC9C /* StateData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8F8809197630030028EC9C /* StateData.swift */; };
 		2CC69D081965F1D3005C415B /* NSDate+Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC69D071965F1D3005C415B /* NSDate+Operators.swift */; };
 		2CE429E719637ECE00FFE04E /* ArcGIS.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2CE429E619637ECE00FFE04E /* ArcGIS.bundle */; };
 		8E2F571C196ABC7E00B9DDE5 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8E2F571B196ABC7E00B9DDE5 /* Settings.bundle */; };
@@ -73,6 +74,7 @@
 		2C7113CD19683F0E00D9FF6F /* SettingsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		2C828DDF19698C50009724FB /* WinnerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WinnerVC.swift; sourceTree = "<group>"; };
 		2C828DE119699A7C009724FB /* CAAnimation+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CAAnimation+Additions.swift"; sourceTree = "<group>"; };
+		2C8F8809197630030028EC9C /* StateData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateData.swift; sourceTree = "<group>"; };
 		2CC69D071965F1D3005C415B /* NSDate+Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDate+Operators.swift"; sourceTree = "<group>"; };
 		2CE429E619637ECE00FFE04E /* ArcGIS.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = ArcGIS.bundle; path = ArcGIS.framework/Versions/Current/Resources/ArcGIS.bundle; sourceTree = ArcGISRT; };
 		8E2B3B82196ACEA700F27C95 /* State_Hunt-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "State_Hunt-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
@@ -190,9 +192,10 @@
 				8E5D13351962E8C9001C6392 /* AppDelegate.swift */,
 				8E5D13371962E8C9001C6392 /* MainVC.swift */,
 				2C7113CD19683F0E00D9FF6F /* SettingsVC.swift */,
+				8E4203C519650FA600FAE9C6 /* ScoreBoard.swift */,
+				2C8F8809197630030028EC9C /* StateData.swift */,
 				8E4203C11964FF0C00FAE9C6 /* StateCell.swift */,
 				2C5255C91966082000242F49 /* HeaderView.swift */,
-				8E4203C519650FA600FAE9C6 /* ScoreBoard.swift */,
 				2C828DDF19698C50009724FB /* WinnerVC.swift */,
 				8E78114619675619003BB7FC /* SoundFX.swift */,
 				8E78114419673869003BB7FC /* Theme.swift */,
@@ -396,6 +399,7 @@
 				8ED78399198203810052064E /* CGFloat+Additions.swift in Sources */,
 				2C7113CE19683F0E00D9FF6F /* SettingsVC.swift in Sources */,
 				8E4203C21964FF0C00FAE9C6 /* StateCell.swift in Sources */,
+				2C8F880A197630030028EC9C /* StateData.swift in Sources */,
 				8E5D13531962F633001C6392 /* NSLC.swift in Sources */,
 				8E78114519673869003BB7FC /* Theme.swift in Sources */,
 				8E4203C619650FA600FAE9C6 /* ScoreBoard.swift in Sources */,

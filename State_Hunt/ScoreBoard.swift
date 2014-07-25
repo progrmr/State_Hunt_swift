@@ -10,106 +10,21 @@ import Foundation
 import ArcGIS
 
 let kDefaultsDateSeenKey = "kDefaultsDateSeenKey"
-let kStateCount          = 50
-
-// -----------------------------------------------
-// where "UPPER(STATE_NAME) = 'NORTH DAKOTA'"
-// -----------------------------------------------
-let kDemographicsURLString = "http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Demographics/ESRI_Census_USA/MapServer/5"
 
 class ScoreBoard {
     
-    typealias StateIndex = Int          // 50 states, index 0..49
-    typealias StateName  = String       // Mixed case, full name of state
-    typealias StateCode  = String       // 2 letter uppercase state code
-
     typealias DateDictionary = Dictionary<StateCode,NSDate>
 
-    let stateNameForCode : Dictionary<StateCode,StateName> = [
-            "AL" : "Alabama"        ,
-            "AK" : "Alaska"         ,
-            "AZ" : "Arizona"        ,
-            "AR" : "Arkansas"       ,
-            "CA" : "California"     ,
-            "CO" : "Colorado"       ,
-            "CT" : "Connecticut"    ,
-            "DE" : "Delaware"       ,
-            "FL" : "Florida"        ,
-            "GA" : "Georgia"        ,
-            "HI" : "Hawaii"         ,
-            "ID" : "Idaho"          ,
-            "IL" : "Illinois"       ,
-            "IN" : "Indiana"        ,
-            "IA" : "Iowa"           ,
-            "KS" : "Kansas"         ,
-            "KY" : "Kentucky"       ,
-            "LA" : "Louisiana"      ,
-            "ME" : "Maine"          ,
-            "MD" : "Maryland"       ,
-            "MA" : "Massachusetts"  ,
-            "MI" : "Michigan"       ,
-            "MN" : "Minnesota"      ,
-            "MS" : "Mississippi"    ,
-            "MO" : "Missouri"       ,
-            "MT" : "Montana"        ,
-            "NE" : "Nebraska"       ,
-            "NV" : "Nevada"         ,
-            "NH" : "New Hampshire"  ,
-            "NJ" : "New Jersey"     ,
-            "NM" : "New Mexico"     ,
-            "NY" : "New York"       ,
-            "NC" : "North Carolina" ,
-            "ND" : "North Dakota"   ,
-            "OH" : "Ohio"           ,
-            "OK" : "Oklahoma"       ,
-            "OR" : "Oregon"         ,
-            "PA" : "Pennsylvania"   ,
-            "RI" : "Rhode Island"   ,
-            "SC" : "South Carolina" ,
-            "SD" : "South Dakota"   ,
-            "TN" : "Tennessee"      ,
-            "TX" : "Texas"          ,
-            "UT" : "Utah"           ,
-            "VT" : "Vermont"        ,
-            "VA" : "Virginia"       ,
-            "WA" : "Washington"     ,
-            "WV" : "West Virginia"  ,
-            "WI" : "Wisconsin"      ,
-            "WY" : "Wyoming"        ]
-    
     // State Storage for persistent state data
     let saver            = StateSaver()             // reads file if there
     
-    // Array of 2 letter state codes sorted by the state's full name
-    let stateCodes       : Array<StateCode>
-    
     // Dictionary keyed by state code containing the NSDate when it was seen
     var dateSeenForCode  = DateDictionary(minimumCapacity: kStateCount)
-    
-    // Dictionary keyed by state code containing the AGSGraphic for each state
-    let stateGraphics    : Dictionary<StateCode,AGSGraphic> = {
-        // read the geometry data from the file in the bundle
-        let statesFilePath  = NSBundle.mainBundle().bundlePath.stringByAppendingPathComponent("state_polygons.plist")
-        let statePolygons   = NSMutableDictionary(contentsOfFile: statesFilePath)
-        var result          = Dictionary<StateCode,AGSGraphic>(minimumCapacity: statePolygons.count)
-        
-        for (stateCode, polygonJSON) in statePolygons {
-            if let code = stateCode as? StateCode {
-                if let json = polygonJSON as? [NSObject:AnyObject] {
-                    let polygon = AGSPolygon.polygonWithJSON(json) as AGSGeometry
-                    result[code] = AGSGraphic(geometry: polygon, symbol: nil, attributes: nil)
-                }
-            }
-        }
-        return result
-    }()
     
     //------------------------------------------
     // initializers
     //------------------------------------------
     init() {
-        stateCodes = stateNameForCode.keysSortedByValue(<)
-        
         // check to see if we have previously saved any state data
         if saver.count() > 0 {
             for stateCode in stateCodes {
@@ -127,46 +42,20 @@ class ScoreBoard {
     //------------------------------------------
     // methods
     //------------------------------------------
-    func numberOfStates(Void) -> Int {
-        return stateCodes.count
-    }
-    
     func numberOfStatesSeen(Void) -> Int {
         return dateSeenForCode.count
     }
     
-    func stateNameForIndex(index: StateIndex) -> StateName {
-        let stateCode : StateCode = stateCodeForIndex(index)
-        let stateName : StateName = stateNameForCode[stateCode]!
-        return stateName
-    }
-    
-    func stateCodeForIndex(index: StateIndex) -> StateCode {
-        return stateCodes[index]
-    }
-    
-    func stateCodeForName(name: StateName) -> StateCode? {
-        for (stateCode:StateCode, stateName:StateName) in stateNameForCode {
-            if name == stateName {
-                return stateCode;
-            }
-        }
-        return nil
-    }
-    
-    func dateSeen(index: StateIndex) -> NSDate? {
-        let stateCode = stateCodeForIndex(index)
+    func dateSeen(stateCode: StateCode) -> NSDate? {
         return dateSeenForCode[stateCode]
     }
     
-    func wasSeen(index: StateIndex) -> Bool {
-        let date = dateSeen(index)
+    func wasSeen(stateCode: StateCode) -> Bool {
+        let date = dateSeen(stateCode)
         return date != nil
     }
     
-    func markStateSeen(index: StateIndex) {
-        let stateCode = stateCodeForIndex(index)
-        
+    func markStateSeen(stateCode: StateCode) {
         // mark state seen with current date/time
         let now = NSDate()
         dateSeenForCode[stateCode] = now
@@ -177,9 +66,7 @@ class ScoreBoard {
         saver.synchronize()
     }
     
-    func unmarkStateSeen(index: StateIndex) {
-        let stateCode = stateCodeForIndex(index)
-       
+    func unmarkStateSeen(stateCode: StateCode) {
         if let date = dateSeenForCode.removeValueForKey(stateCode) {
             // remove date seen from the saved state data
             saver.setObject(nil, forKey:stateCode)
@@ -207,8 +94,8 @@ class ScoreBoard {
     }
 
     func resetAll() {
-        for i in 0 ..< numberOfStates() {
-            unmarkStateSeen(i)
+        for (stateCode, dateSeen) in dateSeenForCode {
+            unmarkStateSeen(stateCode)
         }
     }
     
