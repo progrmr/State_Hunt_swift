@@ -47,6 +47,7 @@
 		8ED56055196CEDC700968B17 /* 727-more.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ED56050196CEDC700968B17 /* 727-more.png */; };
 		8ED56056196CEDC700968B17 /* 727-more@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ED56051196CEDC700968B17 /* 727-more@2x.png */; };
 		8ED56057196CEDC700968B17 /* trophy.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ED56052196CEDC700968B17 /* trophy.png */; };
+		8ED78399198203810052064E /* CGFloat+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED78398198203810052064E /* CGFloat+Additions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -109,6 +110,7 @@
 		8ED56050196CEDC700968B17 /* 727-more.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "727-more.png"; sourceTree = "<group>"; };
 		8ED56051196CEDC700968B17 /* 727-more@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "727-more@2x.png"; sourceTree = "<group>"; };
 		8ED56052196CEDC700968B17 /* trophy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trophy.png; sourceTree = "<group>"; };
+		8ED78398198203810052064E /* CGFloat+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGFloat+Additions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -198,6 +200,7 @@
 				2CC69D071965F1D3005C415B /* NSDate+Operators.swift */,
 				8E5D13521962F633001C6392 /* NSLC.swift */,
 				8EA9B56C196722D200E63D3A /* UIColor+Additions.swift */,
+				8ED78398198203810052064E /* CGFloat+Additions.swift */,
 				2C828DE119699A7C009724FB /* CAAnimation+Additions.swift */,
 				2C14F22D196B2DD7009270E2 /* StateSaver.h */,
 				2C14F22E196B2DD7009270E2 /* StateSaver.m */,
@@ -390,6 +393,7 @@
 				2C5255CA1966082000242F49 /* HeaderView.swift in Sources */,
 				2C828DE019698C50009724FB /* WinnerVC.swift in Sources */,
 				8EA9B56D196722D200E63D3A /* UIColor+Additions.swift in Sources */,
+				8ED78399198203810052064E /* CGFloat+Additions.swift in Sources */,
 				2C7113CE19683F0E00D9FF6F /* SettingsVC.swift in Sources */,
 				8E4203C21964FF0C00FAE9C6 /* StateCell.swift in Sources */,
 				8E5D13531962F633001C6392 /* NSLC.swift in Sources */,
