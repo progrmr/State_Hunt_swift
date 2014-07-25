@@ -19,7 +19,7 @@ class ScoreBoard {
     let saver            = StateSaver()             // reads file if there
     
     // Dictionary keyed by state code containing the NSDate when it was seen
-    var dateSeenForCode  = DateDictionary(minimumCapacity: kStateCount)
+    private var dateSeenForCode  = DateDictionary(minimumCapacity: kStateCount)
     
     //------------------------------------------
     // initializers
@@ -55,23 +55,24 @@ class ScoreBoard {
         return date != nil
     }
     
-    func markStateSeen(stateCode: StateCode) {
-        // mark state seen with current date/time
-        let now = NSDate()
-        dateSeenForCode[stateCode] = now
+    func setState(stateCode: StateCode, dateSeen: NSDate?) {
+        var dateNum: NSNumber? = nil
         
-        // save datesSeenForCode to state data
-        let dateNum = NSNumber(double: now.timeIntervalSinceReferenceDate)
+        if let dateSeen = dateSeen {
+            // mark state seen with specified date/time
+            dateSeenForCode[stateCode] = dateSeen
+            
+            // save datesSeenForCode to state data (stored using NSNumber to
+            // maintain compatibility with StateHunt 1.0)
+            dateNum = NSNumber(double: dateSeen.timeIntervalSinceReferenceDate)
+            
+        } else {
+            // no dateSeen provided, in this case remove stored date (if any)
+            dateSeenForCode.removeValueForKey(stateCode)
+        }
+        
         saver.setObject(dateNum, forKey:stateCode)
         saver.synchronize()
-    }
-    
-    func unmarkStateSeen(stateCode: StateCode) {
-        if let date = dateSeenForCode.removeValueForKey(stateCode) {
-            // remove date seen from the saved state data
-            saver.setObject(nil, forKey:stateCode)
-            saver.synchronize()
-        }
     }
     
     func nDaysElapsed(Void) -> Int {
@@ -95,10 +96,9 @@ class ScoreBoard {
 
     func resetAll() {
         for (stateCode, dateSeen) in dateSeenForCode {
-            unmarkStateSeen(stateCode)
+            setState(stateCode, dateSeen: nil)
         }
     }
-    
 }
 
 

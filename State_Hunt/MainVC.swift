@@ -136,7 +136,7 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         listView?.reloadData()
         
         // check to see if a resetAll has occurred
-        if scores.dateSeenForCode.count == 0 {
+        if scores.numberOfStatesSeen() == 0 {
             self.graphicsLayer.removeAllGraphics()
             self.zoomToUnitedStates() 
         }
@@ -234,24 +234,6 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
             
             let alert = GMAlertView(title: "Remove \(stateName)?", message: message, cancelAction: cancelAction, otherAction: removeAction);
             alert.show();
-
-//            let alert = UIAlertController(title:"Remove \(stateName)?", message:message, preferredStyle:.Alert)
-//            
-//            let cancelAction = UIAlertAction(title:"No", style:.Cancel,
-//                handler: {(action: UIAlertAction!) in
-//                    println("title: \(action.title)")
-//                })
-//            
-//            let yesAction = UIAlertAction(title:"Yes", style:.Default,
-//                handler: {(action: UIAlertAction!) in
-//                    self.setState(stateIndex, seen:false)
-//                    self.clickSound.play()
-//                })
-//            
-//            alert.addAction(cancelAction)
-//            alert.addAction(yesAction)
-//            
-//            self.presentViewController(alert, animated: true, completion: nil)
         }
     }
     
@@ -264,8 +246,8 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         self.zoomToUnitedStates()
         
         // get geometries for all seen states and highlight them on the map
-        for (stateCode, dateSeen) in scores.dateSeenForCode {
-            if let date = scores.dateSeenForCode[stateCode] {
+        for stateCode in stateCodes {
+            if let date = scores.dateSeen(stateCode) {
                 // highlight it on the map
                 highlightStateGeometry(stateCode, zoom: false)
             }
@@ -284,14 +266,12 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         var indexPaths = Array<NSIndexPath>()
         
         for row in 0 ..< stateCodes.count {
-            let code = stateCodes[row]
-            if let date = scores.dateSeenForCode[code] {
-                let indexPath = NSIndexPath(forRow:row, inSection:0)
-                indexPaths += indexPath
+            if let date = scores.dateSeen(stateCodes[row]) {
+                indexPaths += NSIndexPath(forRow:row, inSection:0)
             }
         }
         
-        if indexPaths.count > 0 {
+        if !indexPaths.isEmpty {
             listView!.reloadItemsAtIndexPaths(indexPaths)
         }
         
@@ -389,9 +369,9 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         let seen        = scores.wasSeen(stateCode)
         
         if (seen) {
-            scores.unmarkStateSeen(stateCode)
+            unmarkStateSeen(row)
         } else {
-            scores.markStateSeen(stateCode)
+            markNewStateSeen(row)
         }
         
         return false;		// never select cells
@@ -402,14 +382,14 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
 
         if seen {
             // hasn't been seen before, set it to "seen"
-            scores.markStateSeen(stateCode)
+            scores.setState(stateCode, dateSeen:NSDate())
             
             // highlight it on the map
             highlightStateGeometry(stateCode, zoom: true)
             
         } else {
             // Mark a "seen" state back to "unseen"
-            scores.unmarkStateSeen(stateCode)
+            scores.setState(stateCode, dateSeen:nil)
             
             // unhighlight state
             self.unhighlightStateGeometry(index)
@@ -437,8 +417,8 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
                 let time  = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
                 
                 dispatch_after(time, dispatch_get_main_queue()) {
-                    // check seen date, it might have changed during the delay period
-                    if let date = self.scores.dateSeenForCode[stateCode] {
+                    // recheck seen date, it might have changed during the delay period
+                    if let date = self.scores.dateSeen(stateCode) {
                         self.updateStateColor(stateCode, seen: true, normal: true)
                     }
                 }
