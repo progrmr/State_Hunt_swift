@@ -13,19 +13,19 @@ extension UIColor {
     
     // colors using 32 bit hex RGB values, like 0x00FF00 for pure green
     convenience init(rgb:UInt32, alpha:CGFloat = 1.0) {
-        let red  : CGFloat = CGFloat((rgb & 0xff0000) >> 16) / 255.0
-        let green: CGFloat = CGFloat((rgb & 0x00ff00) >>  8) / 255.0
-        let blue : CGFloat = CGFloat (rgb & 0x0000ff) / 255.0
+        let red   = CGFloat((rgb & 0xff0000) >> 16) / 255.0
+        let green = CGFloat((rgb & 0x00ff00) >>  8) / 255.0
+        let blue  = CGFloat (rgb & 0x0000ff) / 255.0
         
         self.init(red:red, green:green, blue:blue, alpha:alpha)
     }
     
     // colors using 32 bit hex RGBA values, like 0xFF0000FF for pure red
     convenience init(rgba: UInt32) {
-        let red  : CGFloat = CGFloat((rgba & 0xff000000) >> 24) / 255.0
-        let green: CGFloat = CGFloat((rgba & 0x00ff0000) >> 16) / 255.0
-        let blue : CGFloat = CGFloat((rgba & 0x0000ff00) >>  8) / 255.0
-        let alpha: CGFloat = CGFloat (rgba & 0x000000ff) / 255.0
+        let red   = CGFloat((rgba & 0xff000000) >> 24) / 255.0
+        let green = CGFloat((rgba & 0x00ff0000) >> 16) / 255.0
+        let blue  = CGFloat((rgba & 0x0000ff00) >>  8) / 255.0
+        let alpha = CGFloat (rgba & 0x000000ff) / 255.0
 
         self.init(red:red, green:green, blue:blue, alpha:alpha)
     }
