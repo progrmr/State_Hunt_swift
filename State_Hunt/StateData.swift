@@ -69,7 +69,7 @@ let stateNameForCode : Dictionary<StateCode,StateName> = [
 
 // Array of 2 letter state codes sorted by the state's full name
 let stateCodes : Array<StateCode> = {
-    return stateNameForCode.keysSortedByValue(<)
+    stateNameForCode.keysSortedByValue(<)
 }()
 
 // Dictionary keyed by state code containing the AGSGraphic for each state

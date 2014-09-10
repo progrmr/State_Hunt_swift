@@ -22,7 +22,10 @@ class SoundFX {
     
     init(filePath:String, ofType suffix:String, play:Bool = false) {
         let path = NSBundle.mainBundle().pathForResource(filePath, ofType:suffix)
-        audioFileURL = NSURL(fileURLWithPath:path)
+        if path == nil {
+            fatalError("sound file not found")
+        }
+        audioFileURL = NSURL(fileURLWithPath:path!)
         
         let dispatchInit = !s_avSessionInitialized
         

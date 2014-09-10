@@ -42,7 +42,7 @@ import Foundation
 let k_UILayoutPriorityRequired: UILayoutPriority = 1000
 
 // adds a named view for use with visual layout
-@assignment func += (inout left: NSLC, right: (name:String, subview:UIView)) {
+func += (inout left: NSLC, right: (name:String, subview:UIView)) {
     // make sure subview is setup for auto layout
     right.subview.setTranslatesAutoresizingMaskIntoConstraints(false)
 
@@ -60,26 +60,26 @@ let k_UILayoutPriorityRequired: UILayoutPriority = 1000
 }
 
 // adds a Dictionary of named subviews for use with visual layout
-@assignment func += (inout left: NSLC, right: Dictionary<String,UIView>) {
+func += (inout left: NSLC, right: Dictionary<String,UIView>) {
     for (name, subview) in right {
         left += (name, subview)
     }
 }
 
 // adds constraints using the visual layout
-@assignment func += (inout left: NSLC, visualFormat: String) {
+func += (inout left: NSLC, visualFormat: String) {
     left.addConstraints(visualFormat)
 }
 
 // add an array of constraints
-@assignment func += (inout left: NSLC, right: Array<NSLayoutConstraint> ) {
+func += (inout left: NSLC, right: Array<NSLayoutConstraint> ) {
     for constraint in right {
         left.addConstraint(constraint)
     }
 }
 
 // add a single constraint
-@assignment func += (inout left: NSLC, right: NSLayoutConstraint) {
+func += (inout left: NSLC, right: NSLayoutConstraint) {
     left.addConstraint(right)
 }
 
@@ -109,7 +109,8 @@ class NSLC {
     // adds constraints from visual format string to self.constraints
     func addConstraint(constraint:NSLayoutConstraint)
     {
-        constraints += constraint
+        constraints.append(constraint)
+//        constraints += constraint
         parent?.addConstraint(constraint)
     }
     

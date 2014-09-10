@@ -14,11 +14,11 @@ class StateCell: UICollectionViewCell {
     let titleLabel  = UILabel()
     let detailLabel = UILabel()
     
-    convenience init() {
+    convenience override init() {
         self.init(frame: CGRectZero)
     }
     
-    init(frame: CGRect) {
+    override init(frame: CGRect) {
         let theme = Theme.currentTheme
         
         titleLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
@@ -59,6 +59,10 @@ class StateCell: UICollectionViewCell {
         self.layer.borderColor  = theme.kCellBorderColor.CGColor
         self.layer.borderWidth  = 1.0 / UIScreen.mainScreen().scale
         self.layer.cornerRadius = 6
+    }
+
+    required init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func prepareForReuse() {

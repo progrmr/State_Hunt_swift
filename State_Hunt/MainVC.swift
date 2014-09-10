@@ -51,7 +51,7 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
     
     var statusBarHidden : Bool = true
     
-    init(nibName nibNameOrNil: String!, bundle nibBundleOrNil: NSBundle!)
+    override init(nibName nibNameOrNil: String!, bundle nibBundleOrNil: NSBundle!)
     {
         // property init goes here
         dateFormatter.locale    = NSLocale.currentLocale()
@@ -59,6 +59,10 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         dateFormatter.timeStyle = .ShortStyle
 
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil);
+    }
+
+    required init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func loadView() {
@@ -206,8 +210,8 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
     
     func unmarkStateSeen(stateIndex: StateIndex) {
         let stateCode = stateCodes[stateIndex]
-        let dateSeen  = scores.dateSeen(stateCode)
-        let timeSinceSeen = NSDate() - dateSeen!
+        let dateSeen  = scores.dateSeen(stateCode) ?? NSDate()
+        let timeSinceSeen = NSDate() - dateSeen
         
         if (timeSinceSeen < 30) {
             // they just saw this within the past few minutes, go ahead an unmark it without asking
@@ -267,7 +271,7 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         
         for row in 0 ..< stateCodes.count {
             if let date = scores.dateSeen(stateCodes[row]) {
-                indexPaths += NSIndexPath(forRow:row, inSection:0)
+                indexPaths.append(NSIndexPath(forRow:row, inSection:0))
             }
         }
         
@@ -289,7 +293,7 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
     //------------------------------------------
     // UICollectionViewDelegateFlowLayout methods
     //------------------------------------------
-    func collectionView(collectionView: UICollectionView!, layout:UICollectionViewLayout!, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    func collectionView(collectionView: UICollectionView, layout:UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         let row         = indexPath.row
         let stateCode   = stateCodes[row]
         let notSeenYet  = !scores.wasSeen(stateCode)
@@ -305,15 +309,15 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
     // UICollectionViewDataSource methods
     // UICollectionViewDelegate   methods
     //------------------------------------------
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView!) -> Int {
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    func collectionView(collectionView: UICollectionView!, numberOfItemsInSection: Int) -> Int {
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection: Int) -> Int {
         return kStateCount
     }
     
-    func collectionView(collectionView: UICollectionView!, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell! {
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let theme       = Theme.currentTheme
         let row         = indexPath.row;
         let stateCode   = stateCodes[row]
@@ -329,7 +333,7 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
             cell.detailLabel.backgroundColor    = theme.kSeenBackgroundColor
             
             if (showDetails) {
-                let dateSeen = scores.dateSeen(stateCode)
+                let dateSeen = scores.dateSeen(stateCode) ?? NSDate()
                 
                 cell.titleLabel.text            = stateName
                 cell.detailLabel.text           = dateFormatter.stringFromDate(dateSeen)
@@ -350,7 +354,7 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         return cell;
     }
 
-    func collectionView(collectionView: UICollectionView!, viewForSupplementaryElementOfKind kind: String!, atIndexPath indexPath: NSIndexPath!) -> UICollectionReusableView!
+    func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath!) -> UICollectionReusableView
     {
         let theme = Theme.currentTheme
         
@@ -363,7 +367,7 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         return header;
     }
     
-    func collectionView(collectionView: UICollectionView!, shouldSelectItemAtIndexPath indexPath: NSIndexPath!) -> Bool {
+    func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool {
         let row         = indexPath.row
         let stateCode   = stateCodes[row]
         let seen        = scores.wasSeen(stateCode)
@@ -441,7 +445,7 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
     
     func updateStateColor(stateCode: StateCode, seen: Bool, normal: Bool = true) {
         if let graphic = stateGraphics[stateCode] {
-            if graphic.layer {
+            if graphic.layer != nil {
                 graphic.layer.removeGraphic(graphic)
             }
 

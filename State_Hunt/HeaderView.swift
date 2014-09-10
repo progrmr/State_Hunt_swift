@@ -15,11 +15,11 @@ class HeaderView : UICollectionReusableView {
     let summaryLabel    = UILabel()
     let showAllButton   = UIButton()
     
-    convenience init() {
+    convenience override init() {
         self.init(frame: CGRectZero)
     }
-    
-    init(frame: CGRect) {
+
+    override init(frame: CGRect) {
         super.init(frame: frame)
         
         let theme = Theme.currentTheme
@@ -55,6 +55,10 @@ class HeaderView : UICollectionReusableView {
         nslcs += "V:|[showButton]|"
         
         nslcs += NSLC.EQ(summaryLabel, attr1:.CenterX, item2:self, attr2:.CenterX, priority:900)
+    }
+
+    required init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     func setScore(score: Int) {
