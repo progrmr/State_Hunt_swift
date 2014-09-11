@@ -32,6 +32,9 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
     
     // views
     var listView    : UICollectionView?
+    var flowLayout  : UICollectionViewFlowLayout!
+    var cellSize    : CGSize
+    
     var mapView     : AGSMapView?
     var headerView  : HeaderView?
     
@@ -58,6 +61,8 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         dateFormatter.dateStyle = .ShortStyle
         dateFormatter.timeStyle = .ShortStyle
 
+        cellSize = CGSizeMake(103,35)
+        
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil);
     }
 
@@ -106,11 +111,12 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         
         // add the list of states collection view
         let layout = UICollectionViewFlowLayout()
+        self.flowLayout = layout
         layout.sectionInset            = UIEdgeInsetsMake(2, 2, 0, 2)
         layout.scrollDirection         = .Vertical
         layout.minimumLineSpacing      = 3;
         layout.minimumInteritemSpacing = 3;
-        layout.itemSize                = CGSizeMake(103,35)
+        layout.itemSize                = cellSize
         layout.headerReferenceSize     = CGSizeMake(0, 35)
         
         let listView = UICollectionView(frame: CGRectZero, collectionViewLayout: layout)
@@ -136,6 +142,21 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
+        let size = view.bounds.size
+        let width = size.width < size.height ? size.width : size.height
+        
+        if (width > 410) {
+            // size cell to fit nicely on iPhone 6 plus
+            cellSize = CGSizeMake(100,35)
+            flowLayout.itemSize = cellSize
+            flowLayout.invalidateLayout()
+        } else if (width > 370) {
+            // size cell to fit nicely on iPhone 6 
+            cellSize = CGSizeMake(121,35)
+            flowLayout.itemSize = cellSize
+            flowLayout.invalidateLayout()
+        }
         
         listView?.reloadData()
         
@@ -299,7 +320,7 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         let notSeenYet  = !scores.wasSeen(stateCode)
         
         if (notSeenYet || showDetails) {
-            return CGSizeMake(103,35)
+            return cellSize
         } else {
             return CGSizeMake(35, 35)
         }
