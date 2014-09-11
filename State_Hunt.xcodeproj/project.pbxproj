@@ -40,6 +40,7 @@
 		8E78114519673869003BB7FC /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E78114419673869003BB7FC /* Theme.swift */; };
 		8E78114719675619003BB7FC /* SoundFX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E78114619675619003BB7FC /* SoundFX.swift */; };
 		8EA9B56D196722D200E63D3A /* UIColor+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EA9B56C196722D200E63D3A /* UIColor+Additions.swift */; };
+		8EC7E46819C1E163008F49B4 /* ArcGISLicense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC7E46719C1E163008F49B4 /* ArcGISLicense.swift */; };
 		8ED56049196CDA5200968B17 /* GMAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED56048196CDA5200968B17 /* GMAlertView.m */; };
 		8ED5604C196CED7800968B17 /* 1099-list.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ED5604A196CED7800968B17 /* 1099-list.png */; };
 		8ED5604D196CED7800968B17 /* 1099-list@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ED5604B196CED7800968B17 /* 1099-list@2x.png */; };
@@ -103,6 +104,7 @@
 		8E78114419673869003BB7FC /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		8E78114619675619003BB7FC /* SoundFX.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundFX.swift; sourceTree = "<group>"; };
 		8EA9B56C196722D200E63D3A /* UIColor+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Additions.swift"; sourceTree = "<group>"; };
+		8EC7E46719C1E163008F49B4 /* ArcGISLicense.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArcGISLicense.swift; sourceTree = "<group>"; };
 		8ED56047196CDA5200968B17 /* GMAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMAlertView.h; sourceTree = "<group>"; };
 		8ED56048196CDA5200968B17 /* GMAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GMAlertView.m; sourceTree = "<group>"; };
 		8ED5604A196CED7800968B17 /* 1099-list.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "1099-list.png"; sourceTree = "<group>"; };
@@ -209,6 +211,7 @@
 				2C14F22E196B2DD7009270E2 /* StateSaver.m */,
 				8ED56047196CDA5200968B17 /* GMAlertView.h */,
 				8ED56048196CDA5200968B17 /* GMAlertView.m */,
+				8EC7E46719C1E163008F49B4 /* ArcGISLicense.swift */,
 			);
 			path = State_Hunt;
 			sourceTree = "<group>";
@@ -406,6 +409,7 @@
 				2CC69D081965F1D3005C415B /* NSDate+Operators.swift in Sources */,
 				2C14F22F196B2DD7009270E2 /* StateSaver.m in Sources */,
 				8E78114719675619003BB7FC /* SoundFX.swift in Sources */,
+				8EC7E46819C1E163008F49B4 /* ArcGISLicense.swift in Sources */,
 				2C828DE219699A7C009724FB /* CAAnimation+Additions.swift in Sources */,
 				8E5D13381962E8C9001C6392 /* MainVC.swift in Sources */,
 				8E4203C8196519D600FAE9C6 /* NSDictionary+Sort.swift in Sources */,

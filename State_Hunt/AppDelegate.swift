@@ -18,6 +18,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: NSDictionary?) -> Bool {
         // Override point for customization after application launch.
+
+        AGSRuntimeEnvironment.setClientID(kClientId, error: nil)
+        
+        // create the main window and install root VC
         let w = UIWindow()
         w.frame              = UIScreen.mainScreen().bounds
         w.rootViewController = MainVC(nibName: nil, bundle: nil)
