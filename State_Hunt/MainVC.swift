@@ -20,6 +20,7 @@ let kStateCellReuseId   = "kStateCellReuseId"
 let kHeaderViewReuseId  = "kHeaderViewReuseId"
 let kInitialLatLong     = (lat: 39.0, long: -96.0)
 let kMapScaleInitial    = 150_000_000.0
+let kMapScaleInitialPad =  70_000_000.0
 let kMapScaleMinimum    = 300_000_000.0
 let kMapScaleMaximum    =   2_800_000.0
 
@@ -146,7 +147,8 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         nslc += "H:|[backdrop]|"
         nslc += "V:|[backdrop]"
         nslc += "V:|[map(>=160)][list]|"
-        nslc += NSLC.EQ(mapView, attr1:.Height, multiplier:0.40, item2:view, attr2:.Height, priority: 900)
+        
+        nslc += NSLC.EQ(mapView, attr1:.Height, multiplier:0.4, item2:view, attr2:.Height, priority: 900)
         nslc += NSLC.EQ(backdrop, attr1:.Bottom, item2:self.topLayoutGuide, attr2:.Bottom)
     }
     
@@ -155,12 +157,21 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         
         let size = view.bounds.size
         let width = size.width < size.height ? size.width : size.height
-        
-        if (width > 410) {
+        if (width > 600) {
+            // size cell to fit nicely on iPad
+            cellSize = CGSizeMake(140,47)
+            flowLayout.sectionInset = UIEdgeInsetsMake(8, 8, 0, 8)
+            flowLayout.itemSize = cellSize
+            flowLayout.minimumInteritemSpacing = 8;
+            flowLayout.minimumLineSpacing = 8;
+            flowLayout.invalidateLayout()
+            
+        } else if (width > 410) {
             // size cell to fit nicely on iPhone 6 plus
             cellSize = CGSizeMake(100,35)
             flowLayout.itemSize = cellSize
             flowLayout.invalidateLayout()
+            
         } else if (width > 370) {
             // size cell to fit nicely on iPhone 6 
             cellSize = CGSizeMake(121,35)
@@ -500,7 +511,7 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         var center = AGSPoint(x:kInitialLatLong.long, y:kInitialLatLong.lat, spatialReference: AGSSpatialReference.wgs84SpatialReference())
         let engine = AGSGeometryEngine.defaultGeometryEngine()
         center = engine.projectGeometry(center, toSpatialReference: mapView!.spatialReference) as AGSPoint
-        mapView!.zoomToScale(kMapScaleInitial, withCenterPoint: center, animated: true)
+        mapView!.zoomToScale(UIDevice.isPad() ? kMapScaleInitialPad : kMapScaleInitial, withCenterPoint: center, animated: true)
     }
     
 }

@@ -44,6 +44,7 @@
 		8ED56057196CEDC700968B17 /* trophy.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ED56052196CEDC700968B17 /* trophy.png */; };
 		8ED78399198203810052064E /* CGFloat+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED78398198203810052064E /* CGFloat+Additions.swift */; };
 		8EF22AB019CB0A69004E3998 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E5D133C1962E8C9001C6392 /* Images.xcassets */; };
+		8EF22AB219CB219B004E3998 /* UIDevice+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF22AB119CB219B004E3998 /* UIDevice+Additions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,6 +103,7 @@
 		8ED56051196CEDC700968B17 /* 727-more@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "727-more@2x.png"; sourceTree = "<group>"; };
 		8ED56052196CEDC700968B17 /* trophy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trophy.png; sourceTree = "<group>"; };
 		8ED78398198203810052064E /* CGFloat+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGFloat+Additions.swift"; sourceTree = "<group>"; };
+		8EF22AB119CB219B004E3998 /* UIDevice+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+Additions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,6 +187,7 @@
 				2CC69D071965F1D3005C415B /* NSDate+Operators.swift */,
 				8E5D13521962F633001C6392 /* NSLC.swift */,
 				8EA9B56C196722D200E63D3A /* UIColor+Additions.swift */,
+				8EF22AB119CB219B004E3998 /* UIDevice+Additions.swift */,
 				8ED78398198203810052064E /* CGFloat+Additions.swift */,
 				2C828DE119699A7C009724FB /* CAAnimation+Additions.swift */,
 				2C14F22D196B2DD7009270E2 /* StateSaver.h */,
@@ -377,6 +380,7 @@
 				2C7113CE19683F0E00D9FF6F /* SettingsVC.swift in Sources */,
 				8E4203C21964FF0C00FAE9C6 /* StateCell.swift in Sources */,
 				2C8F880A197630030028EC9C /* StateData.swift in Sources */,
+				8EF22AB219CB219B004E3998 /* UIDevice+Additions.swift in Sources */,
 				8E5D13531962F633001C6392 /* NSLC.swift in Sources */,
 				8E78114519673869003BB7FC /* Theme.swift in Sources */,
 				8E4203C619650FA600FAE9C6 /* ScoreBoard.swift in Sources */,
@@ -508,6 +512,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "State_Hunt-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -531,6 +536,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "State_Hunt-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
