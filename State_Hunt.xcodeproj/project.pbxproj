@@ -22,7 +22,6 @@
 		2CC69D081965F1D3005C415B /* NSDate+Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC69D071965F1D3005C415B /* NSDate+Operators.swift */; };
 		2CE429E719637ECE00FFE04E /* ArcGIS.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2CE429E619637ECE00FFE04E /* ArcGIS.bundle */; };
 		8E2F571C196ABC7E00B9DDE5 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8E2F571B196ABC7E00B9DDE5 /* Settings.bundle */; };
-		8E3C71B9196E4794003BE90C /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E3C71B5196E4794003BE90C /* Default-568h@2x.png */; };
 		8E4203C21964FF0C00FAE9C6 /* StateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4203C11964FF0C00FAE9C6 /* StateCell.swift */; };
 		8E4203C619650FA600FAE9C6 /* ScoreBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4203C519650FA600FAE9C6 /* ScoreBoard.swift */; };
 		8E4203C8196519D600FAE9C6 /* NSDictionary+Sort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4203C7196519D600FAE9C6 /* NSDictionary+Sort.swift */; };
@@ -75,7 +74,6 @@
 		2CE429E619637ECE00FFE04E /* ArcGIS.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = ArcGIS.bundle; path = ArcGIS.framework/Versions/Current/Resources/ArcGIS.bundle; sourceTree = ArcGISRT; };
 		8E2B3B82196ACEA700F27C95 /* State_Hunt-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "State_Hunt-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
 		8E2F571B196ABC7E00B9DDE5 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = SOURCE_ROOT; };
-		8E3C71B5196E4794003BE90C /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		8E4203C11964FF0C00FAE9C6 /* StateCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateCell.swift; sourceTree = "<group>"; };
 		8E4203C31965077A00FAE9C6 /* state_data.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = state_data.csv; sourceTree = "<group>"; };
 		8E4203C519650FA600FAE9C6 /* ScoreBoard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoreBoard.swift; sourceTree = "<group>"; };
@@ -127,7 +125,6 @@
 		2C352D661967722B0011866A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				8E3C71B5196E4794003BE90C /* Default-568h@2x.png */,
 				8ED5604A196CED7800968B17 /* 1099-list.png */,
 				8ED5604B196CED7800968B17 /* 1099-list@2x.png */,
 				8ED5604E196CEDC700968B17 /* 724-info.png */,
@@ -320,7 +317,6 @@
 				8EF22AB019CB0A69004E3998 /* Images.xcassets in Resources */,
 				8ED56056196CEDC700968B17 /* 727-more@2x.png in Resources */,
 				8ED56053196CEDC700968B17 /* 724-info.png in Resources */,
-				8E3C71B9196E4794003BE90C /* Default-568h@2x.png in Resources */,
 				2C352D72196772670011866A /* ooh.mp3 in Resources */,
 				2C352D6F196772670011866A /* click.wav in Resources */,
 				8ED5604C196CED7800968B17 /* 1099-list.png in Resources */,
@@ -495,6 +491,8 @@
 		8E5D134D1962E8C9001C6392 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Gary Morris (ES7BUGK27G)";
 				FRAMEWORK_SEARCH_PATHS = "$(HOME)/Library/SDKs/ArcGIS/iOS/";
 				INFOPLIST_FILE = State_Hunt/Info.plist;
@@ -516,6 +514,8 @@
 		8E5D134E1962E8C9001C6392 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Gary Morris (ES7BUGK27G)";
 				FRAMEWORK_SEARCH_PATHS = "$(HOME)/Library/SDKs/ArcGIS/iOS/";
 				INFOPLIST_FILE = State_Hunt/Info.plist;

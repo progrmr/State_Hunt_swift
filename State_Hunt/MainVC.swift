@@ -37,6 +37,7 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
     
     var mapView     : AGSMapView?
     var headerView  : HeaderView?
+//    var titleLabel  : UILabel?
     
     // map layers
     var tiledLayer    : AGSTiledMapServiceLayer?
@@ -127,16 +128,25 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         listView.dataSource      = self;
         listView.delegate        = self;
         
+//        let titleLabel = UILabel()
+//        self.titleLabel = titleLabel
+//        titleLabel.text = "State Hunt"
+//        titleLabel.font = UIFont.boldSystemFontOfSize(48)
+//        titleLabel.textAlignment = .Center
+        
         // define layout constraints dictionary
         var nslc = NSLC(parent:view)
         nslc += ["backdrop" : backdrop, "map" : mapView, "list" : listView]
+
+//        nslc += "H:|[title]|"
+//        nslc += "V:|[title(70)]"
 
         nslc += "H:|[list]|"
         nslc += "H:|[map]|"
         nslc += "H:|[backdrop]|"
         nslc += "V:|[backdrop]"
         nslc += "V:|[map(>=160)][list]|"
-        nslc += NSLC.EQ(mapView, attr1:.Height, multiplier:0.45, item2:view, attr2:.Height, priority: 900)
+        nslc += NSLC.EQ(mapView, attr1:.Height, multiplier:0.40, item2:view, attr2:.Height, priority: 900)
         nslc += NSLC.EQ(backdrop, attr1:.Bottom, item2:self.topLayoutGuide, attr2:.Bottom)
     }
     
