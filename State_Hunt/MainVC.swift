@@ -247,8 +247,8 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
             dateFmtr.timeStyle = .ShortStyle
             
             let dateStr   = dateFmtr.stringFromDate(dateSeen)
-            let stateName = stateNameForCode[stateCode]
-            let message   = "You've saw \(stateName) on \(dateStr), do you really want to undo this?"
+            let stateName = stateNameForCode[stateCode]!
+            let message   = "You saw \(stateName) on \(dateStr), do you really want to undo this?"
             
             let cancelAction = GMAlertAction(title: "No")
             let removeAction = GMAlertAction(title: "Remove")
@@ -342,7 +342,7 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         let theme       = Theme.currentTheme
         let row         = indexPath.row;
         let stateCode   = stateCodes[row]
-        let stateName   = stateNameForCode[stateCode]
+        let stateName   = stateNameForCode[stateCode]!
         let seen        = scores.wasSeen(stateCode)
         var cell        = listView!.dequeueReusableCellWithReuseIdentifier(kStateCellReuseId, forIndexPath: indexPath) as StateCell
         
