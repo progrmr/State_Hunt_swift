@@ -43,8 +43,8 @@
 		8ED56056196CEDC700968B17 /* 727-more@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ED56051196CEDC700968B17 /* 727-more@2x.png */; };
 		8ED56057196CEDC700968B17 /* trophy.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ED56052196CEDC700968B17 /* trophy.png */; };
 		8ED78399198203810052064E /* CGFloat+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED78398198203810052064E /* CGFloat+Additions.swift */; };
-		8EF22AB019CB0A69004E3998 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E5D133C1962E8C9001C6392 /* Images.xcassets */; };
 		8EF22AB219CB219B004E3998 /* UIDevice+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF22AB119CB219B004E3998 /* UIDevice+Additions.swift */; };
+		8EF22AB319CBE477004E3998 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E5D133C1962E8C9001C6392 /* Images.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -317,9 +317,9 @@
 				8ED56054196CEDC700968B17 /* 724-info@2x.png in Resources */,
 				8ED56057196CEDC700968B17 /* trophy.png in Resources */,
 				2C352D6D196772670011866A /* applause.mp3 in Resources */,
-				8EF22AB019CB0A69004E3998 /* Images.xcassets in Resources */,
 				8ED56056196CEDC700968B17 /* 727-more@2x.png in Resources */,
 				8ED56053196CEDC700968B17 /* 724-info.png in Resources */,
+				8EF22AB319CBE477004E3998 /* Images.xcassets in Resources */,
 				2C352D72196772670011866A /* ooh.mp3 in Resources */,
 				2C352D6F196772670011866A /* click.wav in Resources */,
 				8ED5604C196CED7800968B17 /* 1099-list.png in Resources */,
