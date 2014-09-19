@@ -10,6 +10,8 @@ import UIKit
 import Foundation
 import ArcGIS
 
+let showTitleLabel = false      // NOTE: change this to true to generate default screen images with app name on them
+
 //let tiledServiceURLString = "http://services.arcgisonline.com/ArcGIS/rest/services/ESRI_StreetMap_World_2D/MapServer"
 let tiledServiceURLString = "http://services.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer"
 
@@ -34,11 +36,12 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
     // views
     var listView    : UICollectionView?
     var flowLayout  : UICollectionViewFlowLayout!
-    var cellSize    : CGSize
+    var normalCellSize : CGSize
+    var smallCellSize  : CGSize
     
     var mapView     : AGSMapView?
     var headerView  : HeaderView?
-//    var titleLabel  : UILabel?
+    var titleLabel  : UILabel?
     
     // map layers
     var tiledLayer    : AGSTiledMapServiceLayer?
@@ -63,7 +66,8 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         dateFormatter.dateStyle = .ShortStyle
         dateFormatter.timeStyle = .ShortStyle
 
-        cellSize = CGSizeMake(103,35)
+        normalCellSize = CGSizeMake(103,35)
+        smallCellSize  = CGSizeMake(35,35)
         
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil);
     }
@@ -118,7 +122,7 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         layout.scrollDirection         = .Vertical
         layout.minimumLineSpacing      = 3;
         layout.minimumInteritemSpacing = 3;
-        layout.itemSize                = cellSize
+        layout.itemSize                = normalCellSize
         layout.headerReferenceSize     = CGSizeMake(0, 35)
         
         let listView = UICollectionView(frame: CGRectZero, collectionViewLayout: layout)
@@ -129,18 +133,23 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         listView.dataSource      = self;
         listView.delegate        = self;
         
-//        let titleLabel = UILabel()
-//        self.titleLabel = titleLabel
-//        titleLabel.text = "State Hunt"
-//        titleLabel.font = UIFont.boldSystemFontOfSize(48)
-//        titleLabel.textAlignment = .Center
+        if showTitleLabel {
+            let titleLabel = UILabel()
+            self.titleLabel = titleLabel
+            titleLabel.text = "State Hunt"
+            titleLabel.font = UIFont.boldSystemFontOfSize(48)
+            titleLabel.textAlignment = .Center
+        }
         
         // define layout constraints dictionary
         var nslc = NSLC(parent:view)
         nslc += ["backdrop" : backdrop, "map" : mapView, "list" : listView]
-
-//        nslc += "H:|[title]|"
-//        nslc += "V:|[title(70)]"
+        
+        if showTitleLabel {
+            nslc += ("title", self.titleLabel!)
+            nslc += "H:|[title]|"
+            nslc += "V:|[title(70)]"
+        }
 
         nslc += "H:|[list]|"
         nslc += "H:|[map]|"
@@ -159,23 +168,26 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         let width = size.width < size.height ? size.width : size.height
         if (width > 600) {
             // size cell to fit nicely on iPad
-            cellSize = CGSizeMake(140,47)
+            normalCellSize = CGSizeMake(140,47)
+            smallCellSize  = CGSizeMake(47,47)
             flowLayout.sectionInset = UIEdgeInsetsMake(8, 8, 0, 8)
-            flowLayout.itemSize = cellSize
+            flowLayout.itemSize = normalCellSize
             flowLayout.minimumInteritemSpacing = 8;
             flowLayout.minimumLineSpacing = 8;
             flowLayout.invalidateLayout()
             
         } else if (width > 410) {
             // size cell to fit nicely on iPhone 6 plus
-            cellSize = CGSizeMake(100,35)
-            flowLayout.itemSize = cellSize
+            normalCellSize = CGSizeMake(100,35)
+            smallCellSize  = CGSizeMake(35,35)
+            flowLayout.itemSize = normalCellSize
             flowLayout.invalidateLayout()
             
         } else if (width > 370) {
             // size cell to fit nicely on iPhone 6 
-            cellSize = CGSizeMake(121,35)
-            flowLayout.itemSize = cellSize
+            normalCellSize = CGSizeMake(121,35)
+            smallCellSize  = CGSizeMake(35,35)
+            flowLayout.itemSize = normalCellSize
             flowLayout.invalidateLayout()
         }
         
@@ -341,9 +353,9 @@ class MainVC: UIViewController, AGSLayerDelegate, UICollectionViewDataSource, UI
         let notSeenYet  = !scores.wasSeen(stateCode)
         
         if (notSeenYet || showDetails) {
-            return cellSize
+            return normalCellSize
         } else {
-            return CGSizeMake(35, 35)
+            return smallCellSize
         }
     }
 
